@@ -28,28 +28,29 @@
         </button>
     </div>
 
+        <div id="graph">
+            <div id="output">
+                <div id="error">
+                    @foreach (var message in messages)
+                    {
+                        <p style="color:black; background-color: lawngreen ">@message</p>
+                    }
 
-    <div id="graph">
-        <div id="output">
-            <div id="error">
-                @foreach (var message in messages)
-                {
-                    <p style="color:black; background-color: lawngreen ">@message</p>
-                }
-                
-                @foreach (var error in errors)
-                {
-                    <p style="color:black; background-color: darksalmon ">@error</p>
-                }
-                
+                    @foreach (var error in errors)
+                    {
+                        <p style="color:black; background-color: darksalmon ">@error</p>
+                    }
+
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 @code {
 
     [Parameter] public string? Title { get; set; }
+
+    private bool isComputing { get; set; } = false;
 
     private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar) || string.IsNullOrEmpty(cslyContext.Source);
 

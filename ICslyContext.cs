@@ -11,8 +11,6 @@ public interface ICslyContext
 
     void SetSample(string sampleName);
 
-
-
     List<string> GetSamples();
 
 }

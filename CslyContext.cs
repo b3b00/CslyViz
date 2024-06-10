@@ -10,12 +10,26 @@ public class CslyContext : ICslyContext
     public string SampleName => _sampleName;
     public string Grammar { get; set; }
     public string Source { get; set; }
+
+    public CslyContext()
+    {
+    }
     
     public void SetSample(string sampleName)
     {
-        Grammar = GetSampleGrammar(sampleName);
-        Source = getSampleSource(sampleName);
+        if (string.IsNullOrEmpty(sampleName))
+        {
+            Grammar = "";
+            Source = "";
+        }
+        else
+        {
+            Grammar = GetSampleGrammar(sampleName);
+            Source = getSampleSource(sampleName);
+        }
     }
+
+    
 
     public void SetSource(string source)
     {
@@ -35,6 +49,7 @@ public class CslyContext : ICslyContext
 
     private Dictionary<string, string> Samples = new Dictionary<string, string>()
     {
+        { "", null },
         { "Expressions", "expression.txt" },
         { "XML", "xml.txt" },
         { "JSON", "json.txt" },
