@@ -65,7 +65,7 @@
       "url": "js\/viz.js"
     },
     {
-      "hash": "sha256-JI9qjW8Zf9ywAWipNohLqJ0gd3Zsegb91uiVUTrsm7o=",
+      "hash": "sha256-D2BCrbSpkxxmWqFwi+uSjEp8g3MPrwLoRitQV1lrF5E=",
       "url": "js\/vizInterop.js"
     },
     {
@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-Yz608gtPbxCCa0MMcCGuHB2v5RnRc93it5jyqHl2s0k=",
+      "hash": "sha256-hrY3M03S8282LZIu63lHTJ4LMUCDNX5bc6O8hoFIpi0=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -137,11 +137,11 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-ZXIvHJ3LSxsKQvteLfvnkRKWG+\/0t+k1HCDQSMIsiYA=",
+      "hash": "sha256-s0fP6cxR1x2HM15FOTfBpZzcw82BDYRoUlqjo+33R+A=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
-      "hash": "sha256-IYIIYmqZBd0wd+zFwFQxmHSzoIOXxrpRcG5RZe3CBmk=",
+      "hash": "sha256-XKKv18KUsNItF21TsCO8NozIOWXc+5wOHYwdW\/b4w7c=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -285,11 +285,7 @@
       "url": "_framework\/System.Memory.wasm"
     },
     {
-      "hash": "sha256-MbuUZMmLOd2XOE5JWcKwHziT8Yl0Rn96wbcMEK6iV5U=",
-      "url": "_framework\/System.Net.Http.Json.wasm"
-    },
-    {
-      "hash": "sha256-dkjvrxFx4KhmJcYvDv2yHQblOD4BH2ORJg\/bW8aGAQ0=",
+      "hash": "sha256-9Mydke9KteAL5mxIx13MLXP4iUwLLILChlWn9yM4ECY=",
       "url": "_framework\/System.Net.Http.wasm"
     },
     {
@@ -301,7 +297,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-gmAvGXtC9ssMrnprKFPbvErn4TbxiQZE0KhgnN7Q4kg=",
+      "hash": "sha256-ZsUiJG4wzFShtGBzx9Zlu4MvN2y7ZGab0Sl3oUJ7yz8=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -369,7 +365,7 @@
       "url": "_framework\/System.Text.Encodings.Web.wasm"
     },
     {
-      "hash": "sha256-EQ9dB9\/f7pCiv+vHAqWOeUnjSup6+jrGTBFJVRdxmPM=",
+      "hash": "sha256-jbQMHFHW03kYW\/qEdalzl8lDpt1Zcqtbj++kElFWcyU=",
       "url": "_framework\/System.Text.Json.wasm"
     },
     {
@@ -409,5 +405,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "wiFRMote"
+  "version": "XcXfqQoZ"
 };
