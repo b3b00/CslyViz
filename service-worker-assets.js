@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-+iSUZ7TuoZ9wYGd36U+HYz\/5w36P+ADNpNBat3A5pI4=",
+      "hash": "sha256-Yz608gtPbxCCa0MMcCGuHB2v5RnRc93it5jyqHl2s0k=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -137,7 +137,7 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-fJbtXAQJ\/WLchW5fa0Knu4YROOr3+7gOilgQKZRlb\/w=",
+      "hash": "sha256-ZXIvHJ3LSxsKQvteLfvnkRKWG+\/0t+k1HCDQSMIsiYA=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -397,7 +397,7 @@
       "url": "_framework\/System.Xml.XDocument.wasm"
     },
     {
-      "hash": "sha256-HGYR2lPE\/kc8VxVMwlVGTWTH1m9\/iuvKSs2cFvKBbUI=",
+      "hash": "sha256-D+bNkEccaV80piQFbvzlDe+szErufbxtRBt8cu8tw9E=",
       "url": "CslyViz.styles.css"
     },
     {
@@ -409,5 +409,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "d3k6yEIq"
+  "version": "wiFRMote"
 };
