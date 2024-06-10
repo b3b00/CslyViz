@@ -23,8 +23,8 @@ jobs:
 
     # publishes Blazor project to the release-folderl
 
-    - name: Change base-tag in app.razor from / to MyBlazorPwa
-      run: sed -i 's/<base href="\/" \/>/<base href="\/MyBlazorPwa\/" \/>/g' BlazorVizView/App.razor
+    #- name: Change base-tag in app.razor from / to MyBlazorPwa
+    #  run: sed -i 's/<base href="\/" \/>/<base href="\/MyBlazorPwa\/" \/>/g' BlazorVizView/App.razor
       
     - name: Publish .NET Core Project
       run: dotnet publish BlazorVizView/BlazorVizView.csproj -c Release -o release 
