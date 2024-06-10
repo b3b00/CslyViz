@@ -10,14 +10,10 @@
 
 
 <div>
-    <strong>@Title</strong>
-
-    <p class="title">Visualization for CSLY with Viz.js </p>
-
-
+    
     <div>
 
-    
+        <h1>@cslyContext.SampleName</h1>
   
         <button id="submitButton" @onclick="Render" class="btn btn-primary" disabled="@ActionDisabled">
             Render
@@ -91,7 +87,7 @@
         messages.Clear();
         errors.Clear();
         StateHasChanged();
-        await JSRuntime.InvokeAsync<bool>("cleanViz");     
+        await JSRuntime.InvokeVoidAsync("cleanViz");
     }
 
 

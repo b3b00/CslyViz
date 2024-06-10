@@ -7,8 +7,27 @@ public class CslyContext : ICslyContext
 {
     private string _sampleName;
     
-    public string SampleName => _sampleName;
-    public string Grammar { get; set; }
+    public string SampleName
+    {
+        get => _sampleName;
+        set
+        {
+            _sampleName = value;
+        }
+    }
+
+    private string _grammar = "";
+
+    public string Grammar
+    {
+        get => _grammar;
+        set
+        {
+            _sampleName = "";
+            _grammar = value;
+        }
+    }
+
     public string Source { get; set; }
 
     public CslyContext()
@@ -26,6 +45,7 @@ public class CslyContext : ICslyContext
         {
             Grammar = GetSampleGrammar(sampleName);
             Source = getSampleSource(sampleName);
+            _sampleName = sampleName;
         }
     }
 

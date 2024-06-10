@@ -63,7 +63,6 @@ function updateVizWithPanZoom(svg) {
 
 function cleanViz() {
     var graph = document.querySelector("#output");
-
     cleanGraph(graph);
 }
 

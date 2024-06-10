@@ -9,28 +9,27 @@
 
 
 <div>
-    <strong>@Title</strong>
-
-    <p class="title">Visualization for CSLY with Viz.js </p>
     
     <div>
+        
+        <h1>@cslyContext.SampleName</h1>
 
         <select class="form-control d-flex" @onchange="SelectSample">
             @foreach (var template in cslyContext.GetSamples())
             {
-            <option value=@template>@template</option>
+                <option value=@template>@template</option>
             }
         </select>
-        
+
 
         <label for="grammarFile" class="input-label">Importer un fichier grammaire</label>
         <InputFile id="grammarFile" OnChange="LoadGrammar"/>
-        
+
         <div class="input"> <!--style="display: flex; flex-direction: row">-->
 
             <div style="flex-grow:1">
                 <textarea style="flex-grow: 1" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar"  />
-<!--@bind="cslyContext.Grammar" @bind:event="onchange" @bind:after="CleanOutput"/>-->
+                <!--@bind="cslyContext.Grammar" @bind:event="onchange" @bind:after="CleanOutput"/>-->
             </div>
 
         </div>
@@ -40,7 +39,7 @@
         <button id="submitButton" @onclick="() => { HideGenerate = false; HideExtract = true; }" class="btn btn-primary" disabled="@ActionDisabled">
             Generate...
         </button>
-        <button id="extractButton" @onclick="() => { HideExtract = false; HideGenerate = true; }" class="btn btn-primary" >
+        <button id="extractButton" @onclick="() => { HideExtract = false; HideGenerate = true; }" class="btn btn-primary">
             Extract grammar...
         </button>
         <button id="extractButton" @onclick="CleanOutput" class="btn btn-primary">
@@ -59,11 +58,11 @@
                 <input type="text" id="type" @bind="outputType"/>
             </DialogBody>
             <DialogFooter>
-                <button type="button" class="btn btn-primary" @onclick="() => { HideGenerate = true; Generate();}">ok</button>
-                <button type="button" class="btn btn-secondary" @onclick="() => { HideGenerate = true;}" >Cancel</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideGenerate = true; Generate(); }">ok</button>
+                <button type="button" class="btn btn-secondary" @onclick="() => { HideGenerate = true; }">Cancel</button>
             </DialogFooter>
         </div>
-        
+
         <div hidden="@HideExtract">
             <DialogHeader ShowClose="true">
                 <h4>Grammar extraction</h4>
@@ -79,12 +78,12 @@
 
             </DialogBody>
             <DialogFooter>
-                <button type="button" class="btn btn-primary" @onclick="() => { HideExtract = true; ExtractGrammar();}">Yes</button>
-                <button type="button" class="btn btn-secondary" @onclick="() => { HideExtract = true;}">No</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideExtract = true; ExtractGrammar(); }">Yes</button>
+                <button type="button" class="btn btn-secondary" @onclick="() => { HideExtract = true; }">No</button>
             </DialogFooter>
-            
+
         </div>
-        
+
     </div>
 
 
@@ -264,7 +263,8 @@
     {
         errors.Clear();
         messages.Clear();
-        cslyContext.SetSample(e.Value?.ToString() ?? "");
+        string sampleName = e.Value?.ToString() ?? "";
+        cslyContext.SetSample(sampleName);
         StateHasChanged();
     }
 

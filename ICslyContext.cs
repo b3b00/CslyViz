@@ -3,7 +3,7 @@
 public interface ICslyContext 
 {
     
-    string SampleName { get; }
+    string SampleName { get; set; }
     
     string Grammar { get; set; }
     
