@@ -1,6 +1,6 @@
 {
-  "name": "MyBlazorPwa",
-  "short_name": "MyBlazorPwa",
+  "name": "Csly Viewer",
+  "short_name": "CslyViz",
   "id": "./",
   "start_url": "./",
   "display": "standalone",

@@ -1,0 +1,28 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+@inject ICslyContext cslycontext;
+@using Microsoft.JSInterop
+
+@page "/grammar"
+@page "/"
+
+<PageTitle>Grammar</PageTitle>
+
+<GrammarComponent></GrammarComponent> <!-- TODO -->
+
+
+@code{
+
+    private Random random = new Random();
+
+    
+
+    public string JsVersionDebug { get => random.NextInt64().ToString(); }
+
+
+    
+    
+
+
+
+}

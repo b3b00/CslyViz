@@ -24,21 +24,21 @@ jobs:
 
     # publishes Blazor project to the release-folderl
 
-    #- name: Change base-tag in app.razor from / to MyBlazorPwa
-    #  run: sed -i 's/<base href="\/" \/>/<base href="\/MyBlazorPwa\/" \/>/g' BlazorVizView/App.razor
+    #- name: Change base-tag in app.razor from / to CslyViz
+    #  run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/" \/>/g' BlazorVizView/App.razor
       
     - name: Publish .NET Core Project
-      run: dotnet publish MyBlazorPwa.csproj -c Release -o release 
+      run: dotnet publish CslyViz.csproj -c Release -o release 
     
-    # changes the base-tag in index.html from '/' to 'MyBlazorPwa' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to MyBlazorPwa
-      run: sed -i 's/<base href="\/" \/>/<base href="\/MyBlazorPwa\/" \/>/g' release/wwwroot/index.html    
-    - name: Change manifest url in index.html from / to /MyBlazorPwa
-      run: sed -i 's/<link href="manifest.webmanifest" rel="manifest" \/>/<link href="\/MyBlazorPwa\/manifest.webmanifest" rel="manifest" \/>/g' release/wwwroot/index.html
-    - name: Change service-worker url in index.html from / to /MyBlazorPwa
-      run: sed -i 's/\/service-worker.js/\/MyBlazorPwa\/service-worker.js/g' release/wwwroot/index.html  
-    - name: Change favicon url in index.html from / to /MyBlazorPwa
-      run: sed -i 's/href="favicon.png"/href="\/MyBlazorPwa\/favicon.png"/g' release/wwwroot/index.html 
+    # changes the base-tag in index.html from '/' to 'CslyViz' to match GitHub Pages repository subdirectory
+    - name: Change base-tag in index.html from / to CslyViz
+      run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/" \/>/g' release/wwwroot/index.html    
+    - name: Change manifest url in index.html from / to /CslyViz
+      run: sed -i 's/<link href="manifest.webmanifest" rel="manifest" \/>/<link href="\/CslyViz\/manifest.webmanifest" rel="manifest" \/>/g' release/wwwroot/index.html
+    - name: Change service-worker url in index.html from / to /CslyViz
+      run: sed -i 's/\/service-worker.js/\/CslyViz\/service-worker.js/g' release/wwwroot/index.html  
+    - name: Change favicon url in index.html from / to /CslyViz
+      run: sed -i 's/href="favicon.png"/href="\/CslyViz\/favicon.png"/g' release/wwwroot/index.html 
     
     # copy index.html to 404.html to serve the same file when a file is not found
     - name: copy index.html to 404.html

@@ -4,24 +4,43 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MyBlazorPwa</title>
+    <title>Csly Viewer</title>
     <base href="/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="MyBlazorPwa.styles.css" rel="stylesheet" />
+    <link href="cslyViz.styles.css" rel="stylesheet" />
     <link href="manifest.webmanifest" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+
+    <script src="js/viz.js"></script>
+    <script src="js/full.render.js"></script>
+    <script src="js/svg-pan-zoom.js"></script>
+    <script src="js/download.js"></script>
+    
+    
+    <script src="js/vizInterop.js?v=@JsVersionDebug"></script>
+    
+    
 </head>
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+
+        <div class="loader-box">
+            <img src="image/spinner.svg" width="70" />
+            <br />
+            <p id="loadingText" class="mt-3">Loading...</p>
+            <br />
+            <progress id="pbar"></progress>
+        </div>
+        
+<!--        <svg class="loading-progress">-->
+<!--            <circle r="40%" cx="50%" cy="50%" />-->
+<!--            <circle r="40%" cx="50%" cy="50%" />-->
+<!--        </svg>-->
+<!--        <div class="loading-progress-text"></div>-->
     </div>
 
     <div id="blazor-error-ui">

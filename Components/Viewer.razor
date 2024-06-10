@@ -1,0 +1,114 @@
+﻿@using System.IO.Compression
+@using System.Text
+@using csly_cli_api
+@using SharpFileSystem.FileSystems
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+@inject IBlazorDialogService dialogService
+@inject IJSUnmarshalledRuntime JSUnmarshalledRuntime
+@inject ICslyContext cslyContext;
+
+
+<div>
+    <strong>@Title</strong>
+
+    <p class="title">Visualization for CSLY with Viz.js </p>
+
+
+    <div>
+
+    
+  
+        <button id="submitButton" @onclick="Render" class="btn btn-primary" disabled="@ActionDisabled">
+            Render
+        </button>
+
+        <button id="clean" @onclick="CleanViz" class="btn btn-primary">
+            Clean
+        </button>
+    </div>
+
+
+    <div id="graph">
+        <div id="output">
+            <div id="error">
+                @foreach (var message in messages)
+                {
+                    <p style="color:black; background-color: lawngreen ">@message</p>
+                }
+                
+                @foreach (var error in errors)
+                {
+                    <p style="color:black; background-color: darksalmon ">@error</p>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public string? Title { get; set; }
+
+    private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar) || string.IsNullOrEmpty(cslyContext.Source);
+
+    private string dot;
+
+    protected override async void OnInitialized()
+    {
+    }
+
+
+
+
+    private async void Render()
+    {
+;       errors.Clear();
+        messages.Clear();
+        var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
+        if (dotresult.IsOK)
+        {
+            dot = dotresult.Result;
+            await VizRender(dot);
+        }
+        else
+        {
+            errors.AddRange(dotresult.Errors);
+            StateHasChanged();            
+        }
+    }
+    
+   
+    public async Task VizRender(string graph)
+    {
+        await JSRuntime.InvokeAsync<string>("vizRender", graph);
+    }
+    
+    public async Task CleanViz()
+    {
+        messages.Clear();
+        errors.Clear();
+        StateHasChanged();
+        await JSRuntime.InvokeAsync<bool>("cleanViz");     
+    }
+
+
+    private List<string> messages = new List<string>();
+    private List<string> errors = new List<string>();
+    
+    public async Task AppendError(string errorMessage)
+    {
+        errors.Add(errorMessage);
+        StateHasChanged();
+    }
+    
+    public async Task AppendMessage(string message)
+    {
+        messages.Add(message);
+        StateHasChanged();
+    }
+
+
+
+}

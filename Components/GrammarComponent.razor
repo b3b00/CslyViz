@@ -1,0 +1,295 @@
+﻿@using System.IO.Compression
+@using System.Text
+@using csly_cli_api
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+@inject IBlazorDialogService dialogService
+@inject IJSUnmarshalledRuntime JSUnmarshalledRuntime
+@inject ICslyContext cslyContext;
+
+
+<div>
+    <strong>@Title</strong>
+
+    <p class="title">Visualization for CSLY with Viz.js </p>
+
+
+    <div>
+
+        <select class="form-control d-flex" @onchange="SelectSample">
+            @foreach (var template in cslyContext.GetSamples())
+            {
+            <option value=@template>@template</option>
+            }
+        </select>
+        
+
+        <label for="grammarFile" class="input-label">Importer un fichier grammaire</label>
+        <InputFile id="grammarFile" OnChange="LoadGrammar"/>
+        
+        <div class="input"> <!--style="display: flex; flex-direction: row">-->
+
+            <div style="flex-grow:1">
+                <textarea style="flex-grow: 1" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar"  />
+<!--@bind="cslyContext.Grammar" @bind:event="onchange" @bind:after="CleanOutput"/>-->
+            </div>
+
+        </div>
+        <button id="submitButton" @onclick="Compile" class="btn btn-primary" disabled="@ActionDisabled">
+            Compile
+        </button>
+        <button id="submitButton" @onclick="() => { HideGenerate = false; HideExtract = true; }" class="btn btn-primary" disabled="@ActionDisabled">
+            Generate...
+        </button>
+        <button id="extractButton" @onclick="() => { HideExtract = false; HideGenerate = true; }" class="btn btn-primary" >
+            Extract grammar...
+        </button>
+        <button id="extractButton" @onclick="CleanOutput" class="btn btn-primary">
+            Clean
+        </button>
+
+        <div id="generate" hidden="@HideGenerate">
+            <DialogHeader ShowClose="true">
+                <h4>Source generation options</h4>
+            </DialogHeader>
+            <DialogBody>
+                <label for="ns">NameSpace</label>
+                <input id="ns" type="text" @bind="nameSpace"/>
+                <br/>
+                <label for="type">Parser output type</label>
+                <input type="text" id="type" @bind="outputType"/>
+            </DialogBody>
+            <DialogFooter>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideGenerate = true; Generate();}">ok</button>
+                <button type="button" class="btn btn-secondary" @onclick="() => { HideGenerate = true;}" >Cancel</button>
+            </DialogFooter>
+        </div>
+        
+        <div hidden="@HideExtract">
+            <DialogHeader ShowClose="true">
+                <h4>Grammar extraction</h4>
+            </DialogHeader>
+            <DialogBody>
+
+                <label for="lexerFile" class="input-label">Lexer</label>
+                <InputFile id="lexerFile" OnChange="LoadLexer"/>
+                <br/>
+                <label for="parserFile" class="input-label">Parser</label>
+                <InputFile id="parserFile" OnChange="LoadParser"/>
+
+
+            </DialogBody>
+            <DialogFooter>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideExtract = true; ExtractGrammar();}">Yes</button>
+                <button type="button" class="btn btn-secondary" @onclick="() => { HideExtract = true;}">No</button>
+            </DialogFooter>
+            
+        </div>
+        
+    </div>
+
+
+    <div id="graph">
+        <div id="output">
+            <div id="error">
+                @foreach (var message in messages)
+                {
+                    <p style="color:black; background-color: lawngreen ">@message</p>
+                }
+                
+                @foreach (var error in errors)
+                {
+                    <p style="color:black; background-color: darksalmon ">@error</p>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public string? Title { get; set; }
+
+    private string nameSpace;
+
+    private string outputType;
+
+    private bool HideGenerate = true;
+
+
+    private string lexerSource = "";
+
+    private string parserSource = "";
+    
+    private bool HideExtract = true;
+
+    private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar);
+    
+
+    private string Grammar
+    {
+        get => cslyContext.Grammar;
+        set
+        {
+            cslyContext.Grammar = value;
+            CleanOutput();
+        }
+    }
+    
+    protected override async void OnInitialized()
+    {
+    }
+
+    private async Task LoadGrammar(InputFileChangeEventArgs e)
+    {
+        var content =
+            await new StreamReader(e.File.OpenReadStream()).ReadToEndAsync();
+        cslyContext.Grammar = content;
+        StateHasChanged();
+    }
+
+
+
+
+   
+
+
+    private async void ExtractGrammar()
+    {
+            var extractedGrammar = CslyProcessor.ExtractGrammar(parserSource, lexerSource);
+            if (extractedGrammar.IsOK && !string.IsNullOrEmpty(extractedGrammar.Result))
+            {
+                cslyContext.Grammar = extractedGrammar.Result;
+                StateHasChanged();
+            }
+            else
+            {
+                errors.AddRange(extractedGrammar.Errors);
+            }
+        
+    }
+
+    private async void Generate()
+    {
+       
+            Console.WriteLine($"Generate => ns:{nameSpace}, type:{outputType}");
+            var sources = CslyProcessor.GenerateParser(cslyContext.Grammar, nameSpace, outputType);
+            if (sources.IsOK)
+            {
+                byte[] compressedBytes;
+                using (var outStream = new MemoryStream())
+                {
+                    using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+                    {
+                        var fileInArchive = archive.CreateEntry(sources.Result.ParserName + ".cs", CompressionLevel.Fastest);
+                        using (var entryStream = fileInArchive.Open())
+                        {
+                            using (var fileToCompressStream = new MemoryStream(Encoding.UTF8.GetBytes(sources.Result.Parser)))
+                            {
+                                fileToCompressStream.CopyTo(entryStream);
+                            }
+                        }
+
+                        fileInArchive = archive.CreateEntry(sources.Result.LexerName + ".cs", CompressionLevel.Fastest);
+                        using (var entryStream = fileInArchive.Open())
+                        {
+                            using (var fileToCompressStream = new MemoryStream(Encoding.UTF8.GetBytes(sources.Result.Lexer)))
+                            {
+                                fileToCompressStream.CopyTo(entryStream);
+                            }
+                        }
+
+                        fileInArchive = archive.CreateEntry(sources.Result.ParserName + ".csproj", CompressionLevel.Fastest);
+                        using (var entryStream = fileInArchive.Open())
+                        {
+                            using (var fileToCompressStream = new MemoryStream(Encoding.UTF8.GetBytes(sources.Result.Project)))
+                            {
+                                fileToCompressStream.CopyTo(entryStream);
+                            }
+                        }
+                    }
+
+                    compressedBytes = outStream.ToArray();
+                }
+
+
+                string fileName = "parser.zip";
+                string contentType = "application/zip";
+
+                // Check if the IJSRuntime is the WebAssembly implementation of the JSRuntime
+                if (JSUnmarshalledRuntime is IJSUnmarshalledRuntime webAssemblyJSRuntime)
+                {
+                    webAssemblyJSRuntime.InvokeUnmarshalled<string, string, byte[], bool>("BlazorDownloadFileFast", fileName, contentType, compressedBytes);
+                    return;
+                }
+
+                // Fall back to the slow method if not in WebAssembly
+                await JSRuntime.InvokeVoidAsync("BlazorDownloadFile", fileName, contentType, compressedBytes);
+            }
+            else
+            {
+                errors.Clear();
+                errors.AddRange(sources.Errors);
+            }
+    }
+
+  
+    
+    private async void Compile()
+    {
+        messages.Clear();
+        errors.Clear();
+        var compileResult = CslyProcessor.Compile(cslyContext.Grammar);
+        if (compileResult.IsOK)
+        {
+            messages.Clear();
+            
+            messages.Add("Model is OK");
+        }
+        else
+        {
+            errors.Clear();
+            errors.AddRange(compileResult.Errors);
+        }
+        StateHasChanged();
+    }
+
+
+    private List<string> messages = new List<string>();
+    private List<string> errors = new List<string>();
+    
+    
+
+    public async void SelectSample(ChangeEventArgs e)
+    {
+        errors.Clear();
+        messages.Clear();
+        cslyContext.SetSample(e.Value?.ToString() ?? "");
+        StateHasChanged();
+    }
+
+    private void CleanOutput()
+    {
+        errors.Clear();
+        messages.Clear();
+        StateHasChanged();
+    }
+
+    
+    private async Task LoadParser(InputFileChangeEventArgs e)
+    {
+        
+        var content = 
+            await new StreamReader(e.File.OpenReadStream()).ReadToEndAsync();
+        parserSource = content;
+    }
+    
+    private async Task LoadLexer(InputFileChangeEventArgs e)
+    {
+        
+        var content = 
+            await new StreamReader(e.File.OpenReadStream()).ReadToEndAsync();
+        lexerSource = content;
+    }
+}

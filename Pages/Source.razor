@@ -1,0 +1,19 @@
+﻿@page "/source"
+@inject ICslyContext cslycontext;
+
+<PageTitle>Source</PageTitle>
+
+<h1>Source</h1>
+
+<SourceComponent></SourceComponent>
+
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+}
