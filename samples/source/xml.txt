@@ -1,0 +1,10 @@
+<xml>
+    <!-- comment -->
+    <? PI attribute="pi" ?>
+    <text>hello world</text>
+    <tree>
+        <node name="node">
+            <leaf value="leaf"/>
+        </node>
+    </tree>
+</xml>

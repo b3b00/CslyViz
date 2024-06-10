@@ -1,0 +1,140 @@
+
+genericLexer TemplateLexer;
+
+[IgnoreEndOfLines(true)]
+[UpTo] TEXT : "{%" "{="; 
+
+[Push("code")]
+[Sugar] OPEN_CODE : "{%";
+
+[Push("value")]
+[Sugar] OPEN_VALUE : "{=";
+
+[Mode("value")]
+[Mode("code")]
+[AlphaId] ID;
+
+[Mode("value")]
+[Pop]
+[Sugar] CLOSE_VALUE : "=}";
+
+[Mode("code")]
+[Pop]
+[Sugar] CLOSE_CODE : "%}";
+
+[Mode("code")]
+[KeyWord] IF : "if";
+
+[Mode("code")]
+[KeyWord] ENDIF : "endif";
+
+[Mode("code")]
+[KeyWord] ELSE : "else";
+
+[Mode("code")]
+[KeyWord] FOR : "for";
+
+[Mode("code")]
+[KeyWord] AS : "as";
+
+[Mode("code")]
+[KeyWord] END : "end";
+
+[Mode("code")]
+[Sugar] RANGE : "..";
+
+[Mode("code")]
+[String] STRING;
+
+[Mode("code")]
+[Int] INT;
+
+[Mode("code")]
+[KeyWord] TRUE : "TRUE";
+[KeyWord] TRUE : "true";
+
+[Mode("code")]
+[KeyWord] FALSE : "FALSE";
+[KeyWord] FALSE : "false";
+
+[Mode("code")]
+[Sugar] GREATER : ">";
+
+[Mode("code")]
+[Sugar] LESSER : "<";
+
+[Mode("code")]
+[Sugar] EQUALS : "==";
+
+[Mode("code")]
+[Sugar] DIFFERENT : "!=";
+
+[Mode("code")]
+[Sugar] CONCAT : "&";
+
+[Mode("code")]
+[Sugar] ASSIGN : ":=";
+
+[Mode("code")]
+[Sugar] PLUS : "+";
+
+[Mode("code")]
+[Sugar] MINUS : "-";
+
+[Mode("code")]
+[Sugar] TIMES : "*";
+
+[Mode("code")]
+[Sugar] DIVIDE : "/";
+
+[Mode("code")]
+[Sugar] OPEN_PAREN : "(";
+
+[Mode("code")]
+[Sugar] CLOSE_PAREN : ")";
+
+[Mode("code")]
+[KeyWord] NOT : "NOT";
+[KeyWord] NOT : "not";
+
+[Mode("code")]
+[KeyWord] AND : "AND";
+[KeyWord] AND : "and";
+
+[Mode("code")]
+[KeyWord] OR : "OR";
+[KeyWord] OR : "or";
+
+
+
+parser TemplateParser;
+
+-> template: item*;
+item : TEXT;
+item :OPEN_VALUE[d] ID CLOSE_VALUE[d];
+item : OPEN_CODE[d] IF[d] OPEN_PAREN[d] TemplateParser_expressions CLOSE_PAREN[d] CLOSE_CODE[d]
+                                     item* 
+                                  elseBlock? 
+                                  OPEN_CODE[d] ENDIF[d] CLOSE_CODE[d] ;
+if : OPEN_CODE[d] IF[d] OPEN_PAREN[d] TemplateParser_expressions CLOSE_PAREN[d] CLOSE_CODE[d];
+elseBlock : OPEN_CODE[d] ELSE[d] CLOSE_CODE[d] item*;
+item : OPEN_CODE[d] FOR[d] INT RANGE[d] INT AS[d] ID CLOSE_CODE[d] item* OPEN_CODE[d] END[d] CLOSE_CODE[d];
+item : OPEN_CODE[d] FOR[d] ID AS[d] ID CLOSE_CODE[d] item* OPEN_CODE[d] END[d] CLOSE_CODE[d];
+[Right 50] LESSER;
+[Right 50] GREATER;
+[Right 50] EQUALS;
+[Right 50] DIFFERENT;
+primary: INT;
+primary: TRUE;
+primary: FALSE;
+primary: STRING;
+primary: ID;
+[Operand] operand: primary;
+[Right 10] PLUS;
+[Right 10] MINUS;
+[Right 50] TIMES;
+[Right 50] DIVIDE;
+[Prefix 100] MINUS;
+[Right 10] OR;
+[Right 50] AND;
+[Prefix 100] NOT;

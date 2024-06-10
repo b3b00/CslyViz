@@ -14,6 +14,7 @@
     <PackageReference Include="BlazorDialog" Version="2.3.0" />
     <PackageReference Include="csly-cli-api" Version="1.3.5" />
     <PackageReference Include="SharpCoreFileSystem" Version="1.1.2" />
+    <PackageReference Include="sly" Version="3.1.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,11 +24,40 @@
   <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="logic\" />
+    <Folder Include="wwwroot\samples\grammar\" />
+    <Folder Include="wwwroot\samples\source\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\css\loading.css" />
     <Content Remove="Pages\Home.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\samples\grammar\expression.txt" />
+    <EmbeddedResource Include="samples\grammar\expression.txt" />
+    <EmbeddedResource Include="samples\grammar\indented-while.txt" />
+    <EmbeddedResource Include="samples\grammar\json.txt" />
+    <EmbeddedResource Include="samples\grammar\template.txt" />
+    <EmbeddedResource Include="samples\grammar\while.txt" />
+    <EmbeddedResource Include="samples\grammar\xml.txt" />
+    <EmbeddedResource Include="samples\source\expression.txt" />
+    <EmbeddedResource Include="samples\source\indented-while.txt" />
+    <EmbeddedResource Include="samples\source\json.txt" />
+    <EmbeddedResource Include="samples\source\template.txt" />
+    <EmbeddedResource Include="samples\source\while.txt" />
+    <EmbeddedResource Include="samples\source\xml.txt" />
+    <Content Remove="wwwroot\samples\grammar\indented-while.txt" />
+    <Content Remove="wwwroot\samples\grammar\json.txt" />
+    <Content Remove="wwwroot\samples\grammar\template.txt" />
+    <Content Remove="wwwroot\samples\grammar\while.txt" />
+    <Content Remove="wwwroot\samples\grammar\xml.txt" />
+    <Content Remove="wwwroot\samples\source\expression.txt" />
+    <Content Remove="wwwroot\samples\source\indented-while.txt" />
+    <Content Remove="wwwroot\samples\source\json.txt" />
+    <Content Remove="wwwroot\samples\source\template.txt" />
+    <Content Remove="wwwroot\samples\source\while.txt" />
+    <Content Remove="wwwroot\samples\source\xml.txt" />
   </ItemGroup>
 
 </Project>

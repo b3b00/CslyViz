@@ -1,0 +1,108 @@
+
+genericLexer IndentedWhileTokenGeneric;
+
+[IndentationAware(true)]
+[KeyWord] IF : "IF";
+[KeyWord] IF : "if";
+
+[KeyWord] THEN : "THEN";
+[KeyWord] THEN : "then";
+
+[KeyWord] ELSE : "ELSE";
+[KeyWord] ELSE : "else";
+
+[KeyWord] WHILE : "WHILE";
+[KeyWord] WHILE : "while";
+
+[KeyWord] DO : "DO";
+[KeyWord] DO : "do";
+
+[KeyWord] SKIP : "SKIP";
+[KeyWord] SKIP : "skip";
+
+[KeyWord] TRUE : "TRUE";
+[KeyWord] TRUE : "true";
+
+[KeyWord] FALSE : "FALSE";
+[KeyWord] FALSE : "false";
+
+[KeyWord] NOT : "NOT";
+[KeyWord] NOT : "not";
+
+[KeyWord] AND : "AND";
+[KeyWord] AND : "and";
+
+[KeyWord] OR : "OR";
+[KeyWord] OR : "or";
+
+[KeyWord] PRINT : "PRINT";
+[KeyWord] PRINT : "print";
+
+[KeyWord] RETURN : "RETURN";
+[KeyWord] RETURN : "return";
+
+[AlphaNumDashId] IDENTIFIER;
+
+[String] STRING;
+
+[Int] INT;
+
+[Sugar] GREATER : ">";
+
+[Sugar] LESSER : "<";
+
+[Sugar] EQUALS : "==";
+
+[Sugar] DIFFERENT : "!=";
+
+[Sugar] CONCAT : ".";
+
+[Sugar] ASSIGN : ":=";
+
+[Sugar] PLUS : "+";
+
+[Sugar] MINUS : "-";
+
+[Sugar] TIMES : "*";
+
+[Sugar] DIVIDE : "/";
+
+[Sugar] SEMICOLON : ";";
+
+[SingleLineComment] COMMENT : "#";
+
+
+
+parser IndentedWhileParserGeneric;
+
+[UseMemoization]
+[AutoCloseIndentations]
+[Right 50] LESSER;
+[Right 50] GREATER;
+[Right 50] EQUALS;
+[Right 50] DIFFERENT;
+[Right 10] CONCAT;
+-> program: sequence;
+block : INDENT[d] sequence UINDENT[d];
+statement : block;
+sequence: statement*;
+statement: IF[d] IndentedWhileParserGeneric_expressions THEN[d] block (ELSE[d] block)?;
+statement: WHILE[d] IndentedWhileParserGeneric_expressions DO[d] block;
+statement: IDENTIFIER ASSIGN[d] IndentedWhileParserGeneric_expressions;
+statement: SKIP[d];
+statement: RETURN[d] IndentedWhileParserGeneric_expressions;
+statement: PRINT[d] IndentedWhileParserGeneric_expressions;
+primary: INT;
+primary: TRUE;
+primary: FALSE;
+primary: STRING;
+primary: IDENTIFIER;
+[Operand] operand: primary;
+[Right 10] PLUS;
+[Right 10] MINUS;
+[Right 50] TIMES;
+[Right 50] DIVIDE;
+[Prefix 100] MINUS;
+[Right 10] OR;
+[Right 50] AND;
+[Prefix 100] NOT;

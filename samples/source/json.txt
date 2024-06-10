@@ -1,0 +1,11 @@
+{
+   "bool" : true,
+   "int" : 42,
+   "double" : 3.14,
+   "string" : "hello world",
+   "array" : [1, 2, 3],
+   "object" : {
+        "key" : "key",
+        "value" : 0
+    }
+} 

@@ -1,0 +1,47 @@
+
+genericLexer JsonTokenGeneric;
+
+[String] STRING;
+
+[Double] DOUBLE;
+
+[Int] INT;
+
+[KeyWord] BOOLEAN : "true" "false";
+
+[Sugar] ACCG : "{";
+
+[Sugar] ACCD : "}";
+
+[Sugar] CROG : "[";
+
+[Sugar] CROD : "]";
+
+[Sugar] COMMA : ",";
+
+[Sugar] COLON : ":";
+
+[KeyWord] NULL : "null";
+
+
+
+parser EbnfJsonGenericParser;
+
+[BroadenTokenWindow]
+-> root : value;
+value : STRING;
+value : INT;
+value : DOUBLE;
+value : BOOLEAN;
+value : NULL[d];
+value : object;
+value: list;
+object: ACCG[d] ACCD[d];
+object: ACCG[d] members ACCD[d];
+list: CROG[d] CROD[d];
+list: CROG[d] listElements CROD[d];
+listElements: value additionalValue*;
+additionalValue: COMMA value;
+members: property additionalProperty*;
+additionalProperty : COMMA property;
+property: STRING COLON[d] value;

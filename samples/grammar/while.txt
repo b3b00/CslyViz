@@ -1,0 +1,103 @@
+
+genericLexer WhileTokenGeneric;
+
+[KeyWord] IF : "IF";
+[KeyWord] IF : "if";
+
+[KeyWord] THEN : "THEN";
+[KeyWord] THEN : "then";
+
+[KeyWord] ELSE : "ELSE";
+[KeyWord] ELSE : "else";
+
+[KeyWord] WHILE : "WHILE";
+[KeyWord] WHILE : "while";
+
+[KeyWord] DO : "DO";
+[KeyWord] DO : "do";
+
+[KeyWord] SKIP : "SKIP";
+[KeyWord] SKIP : "skip";
+
+[KeyWord] TRUE : "TRUE";
+[KeyWord] TRUE : "true";
+
+[KeyWord] FALSE : "FALSE";
+[KeyWord] FALSE : "false";
+
+[KeyWord] NOT : "NOT";
+[KeyWord] NOT : "not";
+
+[KeyWord] AND : "AND";
+[KeyWord] AND : "and";
+
+[KeyWord] OR : "OR";
+[KeyWord] OR : "or";
+
+[KeyWord] PRINT : "PRINT";
+[KeyWord] PRINT : "print";
+
+[AlphaId] IDENTIFIER;
+
+[String] STRING;
+
+[Int] INT;
+
+[Sugar] GREATER : ">";
+
+[Sugar] LESSER : "<";
+
+[Sugar] EQUALS : "==";
+
+[Sugar] DIFFERENT : "!=";
+
+[Sugar] CONCAT : ".";
+
+[Sugar] ASSIGN : ":=";
+
+[Sugar] PLUS : "+";
+
+[Sugar] MINUS : "-";
+
+[Sugar] TIMES : "*";
+
+[Sugar] DIVIDE : "/";
+
+[Sugar] LPAREN : "(";
+
+[Sugar] RPAREN : ")";
+
+[Sugar] SEMICOLON : ";";
+
+
+
+parser WhileParserGeneric;
+
+[Right 50] LESSER;
+[Right 50] GREATER;
+[Right 50] EQUALS;
+[Right 50] DIFFERENT;
+[Right 10] CONCAT;
+-> statement :  LPAREN statement RPAREN ;
+-> statement : sequence;
+sequence : statementPrim additionalStatements*;
+additionalStatements : SEMICOLON statementPrim;
+statementPrim: IF WhileParserGeneric_expressions THEN statement ELSE statement;
+statementPrim: WHILE WhileParserGeneric_expressions DO statement;
+statementPrim: IDENTIFIER ASSIGN WhileParserGeneric_expressions;
+statementPrim: SKIP;
+statementPrim: PRINT WhileParserGeneric_expressions;
+primary: INT;
+primary: TRUE;
+primary: FALSE;
+primary: STRING;
+primary: IDENTIFIER;
+[Operand] operand: primary;
+[Right 10] PLUS;
+[Right 10] MINUS;
+[Right 50] TIMES;
+[Right 50] DIVIDE;
+[Prefix 100] MINUS;
+[Right 10] OR;
+[Right 50] AND;
+[Prefix 100] NOT;
