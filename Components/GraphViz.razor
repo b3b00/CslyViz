@@ -1,0 +1,50 @@
+﻿@inject IJSRuntime JSRuntime
+
+<h3>GraphViz</h3>
+
+<div id="@Id"></div>
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }= "graphviztarget";
+
+    [Parameter]
+    public string DotGraphViz
+    {
+        get => _graph;
+        set
+        {
+            Console.WriteLine($"updating graph => {value}");
+            _graph = value;
+            new Task(async () =>
+            {
+                await RenderViz(_graph);
+            }).Start();
+        }
+    }
+
+    private string _graph = null;
+    
+    protected override async void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(DotGraphViz))
+        {
+            await RenderViz(DotGraphViz);
+        }
+    }
+    
+    private async Task RenderViz(string graph)
+    {
+        if (!string.IsNullOrEmpty(graph))
+        {
+            Console.WriteLine($"rendering graph on {Id}");
+            await JSRuntime.InvokeAsync<string>("vizRender", graph, Id);
+            // await JSRuntime.InvokeAsync<string>("vizRenderOn", graph, divId);
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("cleanViz", Id);
+        }
+    }
+}

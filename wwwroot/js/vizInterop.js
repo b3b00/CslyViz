@@ -1,10 +1,10 @@
-﻿function vizRender(graphvizText) {
+﻿function vizRender(graphvizText, target = "output") {
     var viz = new Viz();
 
     //viz.renderSVGElement(graphvizText)
     viz.renderSVGElement(graphvizText)
         .then(function (element) {
-            updateVizWithPanZoom(element);
+            updateVizWithPanZoom(element, target);
         })
         .catch(error => {
             // Create a new Viz instance (@see Caveats page for more info)
@@ -31,39 +31,43 @@ function cleanGraph(graph) {
 
 }
 
-function updateVizWithPanZoom(svg) {
+function updateVizWithPanZoom(svg, target) {
 
-    var graph = document.querySelector("#output");
+    var graph = document.querySelector("#"+target);
+    if (graph) {
 
-    cleanGraph(graph);
+        cleanGraph(graph);
 
-    svg.id = 'svg';
-    graph.appendChild(svg);
-
-
-    panZoom = svgPanZoom(svg, {
-        zoomEnabled: true,
-        controlIconsEnabled: true,
-        fit: true,
-        center: true,
-        minZoom: 0.1
-    });
+        svg.id = 'svg';
+        graph.appendChild(svg);
 
 
-    svg.addEventListener('paneresize', function (e) {
-        panZoom.resize();
-    }, false);
-    window.addEventListener('resize', function (e) {
-        panZoom.resize();
-    });
+        panZoom = svgPanZoom(svg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1
+        });
 
-    return svg
+
+        svg.addEventListener('paneresize', function (e) {
+            panZoom.resize();
+        }, false);
+        window.addEventListener('resize', function (e) {
+            panZoom.resize();
+        });
+
+        return svg
+    }
 }
 
 
-function cleanViz() {
-    var graph = document.querySelector("#output");
-    cleanGraph(graph);
+function cleanViz(target) {
+    var graph = document.querySelector("#"+target);
+    if (graph) {
+        cleanGraph(graph);
+    }
 }
 
 
