@@ -103,6 +103,16 @@
             </div>
         </div>
     </div>
+
+    <ul>
+        @if (Timings != null && Timings.Any())
+        {
+        @foreach (var time in Timings)
+        {
+        <li>@time.Key : @time.Value ms</li>
+        }
+        }
+    </ul>
 </div>
 
 @code {
@@ -123,6 +133,8 @@
     private bool HideExtract = true;
 
     private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar);
+    
+    private IDictionary<string,long> Timings { get; set; }
     
 
     private string Grammar
@@ -242,7 +254,7 @@
         if (compileResult.IsOK)
         {
             messages.Clear();
-            
+            Timings = compileResult.Timings;
             messages.Add("Model is OK");
         }
         else

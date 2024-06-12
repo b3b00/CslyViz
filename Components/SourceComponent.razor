@@ -37,6 +37,8 @@
   
     </div>
 
+    
+
 
     <div id="graph">
         <div id="output">
@@ -54,11 +56,22 @@
             </div>
         </div>
     </div>
+    <ul>
+        @if (Timings != null && Timings.Any())
+        {
+        @foreach (var time in Timings)
+        {
+        <li>@time.Key : @time.Value ms</li>
+        }
+        }
+    </ul>
 </div>
 
 @code {
 
     [Parameter] public string? Title { get; set; }
+    
+    private IDictionary<string,long> Timings { get; set; }
 
     private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar) || string.IsNullOrEmpty(cslyContext.Source);
 
@@ -114,6 +127,7 @@
         var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
         if (dotresult.IsOK)
         {
+            Timings = dotresult.Timings;
             messages.Add("parse OK");
             StateHasChanged();
         }

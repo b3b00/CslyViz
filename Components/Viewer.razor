@@ -31,17 +31,32 @@
                 {
                     <p style="color:black; background-color: lawngreen ">@message</p>
                 }
-
+    
                 @foreach (var error in errors)
                 {
                     <p style="color:black; background-color: darksalmon ">@error</p>
                 }
-
+    
             </div>
         </div>
     </div>
+    @if (processing)
+    {
+        <h4>processing...</h4>
+        <img src="image/spinner.svg" width="50px"/>
+    } else {
+        <ul>
+            @if (Timings != null && Timings.Any())
+            {
+                @foreach (var time in Timings)
+                {
+                    <li>@time.Key : @time.Value ms</li>
+                }
+            }
+        </ul>
+        <GraphViz DotGraphViz="@dot" Id="bololo"></GraphViz>
+    }
     
-    <GraphViz DotGraphViz="@dot" Id="bololo"></GraphViz>
 </div>
 
 @code {
@@ -49,10 +64,14 @@
     [Parameter] public string? Title { get; set; }
 
     private bool isComputing { get; set; } = false;
+    
+    private IDictionary<string,long> Timings { get; set; }
 
     private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar) || string.IsNullOrEmpty(cslyContext.Source);
 
     private string dot;
+
+    private bool processing = false;
 
     protected override async void OnInitialized()
     {
@@ -65,18 +84,34 @@
     {
 ;       errors.Clear();
         messages.Clear();
-        var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
-        if (dotresult.IsOK)
+        Console.WriteLine("processing...");
+        await Task.Delay(1);
+        
+        processing = true;
+        StateHasChanged();
+        Task.Run(() =>
         {
-            dot = dotresult.Result;
+            var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
+            processing = false;
             StateHasChanged();
-            //await VizRender(dot);
-        }
-        else
-        {
-            errors.AddRange(dotresult.Errors);
-            StateHasChanged();            
-        }
+            if (dotresult.IsOK)
+            {
+                messages.Add("Parse OK");
+                dot = dotresult.Result;
+                Timings = dotresult.Timings;
+                StateHasChanged();
+            }
+            else
+            {
+                errors.AddRange(dotresult.Errors);
+                StateHasChanged();            
+            }
+        });
+
+        
+        Console.WriteLine("processed.");
+        StateHasChanged();
+        
     }
     
    
@@ -87,6 +122,7 @@
     
     public async Task CleanViz()
     {
+        Timings = null;
         messages.Clear();
         errors.Clear();
         StateHasChanged();
