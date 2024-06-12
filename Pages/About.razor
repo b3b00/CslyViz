@@ -1,14 +1,45 @@
 ﻿@page "/About"
+@using System.Reflection
 <h3>About</h3>
 
 @code {
     
 }
 <div>
-    
+    <div style="margin-bottom: 100px">
+    <h2 style="display: inline ">Csly Viewer v @Version - </h2><span>(<a href="http://github.com/b3b00/cslyviz/commit/@Hash">@Hash</a></span>
+    </div>
     <ul>
         <li><a href="https://viz-js.com/">viz.js</a> : the JS lib that render a syntax tree as a graph</li>
         <li><a href="https://github.com/b3b00/csly">CSLY</a> : the parser generator</li>
         <li><a href="https://github.com/b3b00/csly-cli">CSLY CLI</a> : the CSLY companion tool that help write coe for CSLY from a formal grammar definition</li>
     </ul>
 </div>
+
+@code
+{
+    
+    protected string Version = "";
+    
+    protected string Hash = "";
+
+    protected override async void OnInitialized()
+    {
+        var version = ""; 
+            
+        var appAssembly = this.GetType().Assembly;
+        var infoVerAttr = (AssemblyInformationalVersionAttribute)appAssembly
+            .GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute)).FirstOrDefault();
+
+        if (infoVerAttr != null && infoVerAttr.InformationalVersion.Length > 6)
+        {
+            // something like "1.0+a34a913742f8845d3da5309b7b17242222d41a21";
+            version = infoVerAttr.InformationalVersion;
+        }
+
+// get git hash
+        Hash = version.Substring( version.IndexOf('+') + 1);
+// get version 
+        Version = version.Substring(0, version.IndexOf('+'));
+    }
+}
