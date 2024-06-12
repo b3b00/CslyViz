@@ -24,22 +24,24 @@
         </button>
     </div>
 
-        <div id="graph">
-            <div id="output">
-                <div id="error">
-                    @foreach (var message in messages)
-                    {
-                        <p style="color:black; background-color: lawngreen ">@message</p>
-                    }
+    <div id="graph">
+        <div id="output">
+            <div id="error">
+                @foreach (var message in messages)
+                {
+                    <p style="color:black; background-color: lawngreen ">@message</p>
+                }
 
-                    @foreach (var error in errors)
-                    {
-                        <p style="color:black; background-color: darksalmon ">@error</p>
-                    }
+                @foreach (var error in errors)
+                {
+                    <p style="color:black; background-color: darksalmon ">@error</p>
+                }
 
-                </div>
             </div>
         </div>
+    </div>
+    
+    <GraphViz DotGraphViz="@dot"></GraphViz>
 </div>
 
 @code {
@@ -67,7 +69,8 @@
         if (dotresult.IsOK)
         {
             dot = dotresult.Result;
-            await VizRender(dot);
+            StateHasChanged();
+            //await VizRender(dot);
         }
         else
         {

@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
     <Folder Include="logic\" />
     <Folder Include="wwwroot\samples\grammar\" />
     <Folder Include="wwwroot\samples\source\" />
@@ -70,5 +69,7 @@
       <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
     </Exec>
   </Target>
+  
+  
 
 </Project>
