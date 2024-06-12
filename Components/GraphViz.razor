@@ -2,11 +2,12 @@
 
 <h3>GraphViz</h3>
 
-<div id="@divId"></div>
+<div id="@Id"></div>
 
 @code {
 
-    protected Guid divId = Guid.NewGuid();
+    [Parameter]
+    public string Id { get; set; }= "graphviztarget";
 
     [Parameter]
     public string DotGraphViz
@@ -16,7 +17,10 @@
         {
             Console.WriteLine($"updating graph => {value}");
             _graph = value;
-            RenderViz(_graph);
+            new Task(async () =>
+            {
+                await RenderViz(_graph);
+            }).Start();
         }
     }
 
@@ -24,16 +28,23 @@
     
     protected override async void OnInitialized()
     {
-        divId = Guid.NewGuid();
         if (!string.IsNullOrEmpty(DotGraphViz))
         {
-            RenderViz(DotGraphViz);
+            await RenderViz(DotGraphViz);
         }
     }
     
-    private void RenderViz(string graph)
+    private async Task RenderViz(string graph)
     {
-        Console.WriteLine($"rendering graph on {divId}");
-        JSRuntime.InvokeAsync<string>("vizRenderOn", graph, divId).GetAwaiter().GetResult();
+        if (!string.IsNullOrEmpty(graph))
+        {
+            Console.WriteLine($"rendering graph on {Id}");
+            await JSRuntime.InvokeAsync<string>("vizRender", graph, Id);
+            // await JSRuntime.InvokeAsync<string>("vizRenderOn", graph, divId);
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("cleanViz", Id);
+        }
     }
 }

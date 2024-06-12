@@ -41,7 +41,7 @@
         </div>
     </div>
     
-    <GraphViz DotGraphViz="@dot"></GraphViz>
+    <GraphViz DotGraphViz="@dot" Id="bololo"></GraphViz>
 </div>
 
 @code {
@@ -90,7 +90,7 @@
         messages.Clear();
         errors.Clear();
         StateHasChanged();
-        await JSRuntime.InvokeVoidAsync("cleanViz");
+        dot = null;
     }
 
 

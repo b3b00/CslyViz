@@ -1,21 +1,4 @@
-﻿function vizRender(graphvizText) {
-    var viz = new Viz();
-
-    //viz.renderSVGElement(graphvizText)
-    viz.renderSVGElement(graphvizText)
-        .then(function (element) {
-            updateVizWithPanZoom(element);
-        })
-        .catch(error => {
-            // Create a new Viz instance (@see Caveats page for more info)
-            viz = new Viz();
-
-            appendError(error);
-        });
-
-}
-
-function vizRenderOn(graphvizText,target) {
+﻿function vizRender(graphvizText, target = "output") {
     var viz = new Viz();
 
     //viz.renderSVGElement(graphvizText)
@@ -48,79 +31,43 @@ function cleanGraph(graph) {
 
 }
 
-function updateVizWithPanZoom(svg) {
+function updateVizWithPanZoom(svg, target) {
 
-    return updateVizWithPanZoomOn("#output");
-    // var graph = document.querySelector("#output");
-    //
-    // cleanGraph(graph);
-    //
-    // svg.id = 'svg';
-    // graph.appendChild(svg);
-    //
-    //
-    // panZoom = svgPanZoom(svg, {
-    //     zoomEnabled: true,
-    //     controlIconsEnabled: true,
-    //     fit: true,
-    //     center: true,
-    //     minZoom: 0.1
-    // });
-    //
-    //
-    // svg.addEventListener('paneresize', function (e) {
-    //     panZoom.resize();
-    // }, false);
-    // window.addEventListener('resize', function (e) {
-    //     panZoom.resize();
-    // });
-    //
-    // return svg
-}
+    var graph = document.querySelector("#"+target);
+    if (graph) {
 
-function updateVizWithPanZoomOn(svg, target) {
+        cleanGraph(graph);
 
-    var graph = document.querySelector(target);
-
-    cleanGraph(graph);
-
-    svg.id = 'svg';
-    graph.appendChild(svg);
+        svg.id = 'svg';
+        graph.appendChild(svg);
 
 
-    panZoom = svgPanZoom(svg, {
-        zoomEnabled: true,
-        controlIconsEnabled: true,
-        fit: true,
-        center: true,
-        minZoom: 0.1
-    });
+        panZoom = svgPanZoom(svg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1
+        });
 
 
-    svg.addEventListener('paneresize', function (e) {
-        panZoom.resize();
-    }, false);
-    window.addEventListener('resize', function (e) {
-        panZoom.resize();
-    });
+        svg.addEventListener('paneresize', function (e) {
+            panZoom.resize();
+        }, false);
+        window.addEventListener('resize', function (e) {
+            panZoom.resize();
+        });
 
-    return svg
+        return svg
+    }
 }
 
 
-function cleanViz() {
-    var graph = document.querySelector("#output");
-    cleanGraph(graph);
+function cleanViz(target) {
+    var graph = document.querySelector("#"+target);
+    if (graph) {
+        cleanGraph(graph);
+    }
 }
 
-
-function buildSvg() {
-    import { instance } from "@viz-js/viz";
-
-    instance().then(viz => {
-        const svg = viz.renderSVGElement("digraph { a -> b }");
-
-        document.getElementById("graph").appendChild(svg);
-    });
-}
 
