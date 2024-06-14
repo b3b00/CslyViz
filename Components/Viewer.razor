@@ -13,13 +13,9 @@
 
         <h1>@cslyContext.SampleName</h1>
   
-        <button id="submitButton" @onclick="Render" class="btn btn-primary" disabled="@ActionDisabled">
-            Render
-        </button>
+        <button id="submitButton" @onclick="Render" class="btn btn-primary bi-play-btn" disabled="@ActionDisabled"></button>
 
-        <button id="clean" @onclick="CleanViz" class="btn btn-primary">
-            Clean
-        </button>
+        <button id="clean" @onclick="CleanViz" class="btn btn-primary bi-trash"></button>
     </div>
 
     <div id="graph">
@@ -42,7 +38,7 @@
     {
         <h4>processing...</h4>
         <img src="image/spinner.svg" width="50px"/>
-    } else {
+    } else if (!string.IsNullOrEmpty(dot)){
         <ul>
             @if (Timings != null && Timings.Any())
             {
