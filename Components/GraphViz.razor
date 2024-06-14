@@ -55,16 +55,16 @@
 
     private async Task ZoomIn()
     {
-        await JSRuntime.InvokeVoidAsync("zoomIn",  Id);
+        await JSRuntime.InvokeVoidAsync("zoomIn",  Id+" > svg");
     }
     
     private async Task ZoomOut()
     {
-        await JSRuntime.InvokeVoidAsync("zoomOut",  Id);    
+        await JSRuntime.InvokeVoidAsync("zoomOut",  Id+" > svg");    
     }
     
     private async Task Reset()
     {
-        await JSRuntime.InvokeVoidAsync("zoomReset",  Id);
+        await JSRuntime.InvokeVoidAsync("zoomReset",  Id+" > svg");
     }
 }

@@ -25,14 +25,13 @@ function zoomIn(target) {
 function zoomOut(target) {
     console.log('zoom out '+target);
     var panZoom = svgPanZoom('#'+target);
-    panZoom.zoomIn();
+    panZoom.zoomOut();
 }
 
 function zoomReset(target) {
     console.log('zoom reset '+target);
-    var panZoom = svgPanZoom('#'+
-        target);
-    panZoom.zoomIn();
+    var panZoom = svgPanZoom('#'+target);
+    panZoom.resetZoom();
 }
 
 
