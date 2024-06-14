@@ -7,7 +7,7 @@
 @inject IBlazorDialogService dialogService
 @inject IJSUnmarshalledRuntime JSUnmarshalledRuntime
 @inject ICslyContext cslyContext;
-
+@inject ICslyProcessor processor;
 
 <div>
     <div>
@@ -94,7 +94,7 @@
 
     private async void GetJson()
     {
-        var json = CslyProcessor.GetJson(cslyContext.Grammar, cslyContext.Source);
+        var json = processor.GetJson(cslyContext.Grammar, cslyContext.Source);
         if (json.IsOK)
         {
             string fileName = "source.json";
@@ -124,7 +124,7 @@
 ;       errors.Clear();
         messages.Clear();
         
-        var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
+        var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source);
         if (dotresult.IsOK)
         {
             Timings = dotresult.Timings;

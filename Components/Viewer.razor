@@ -1,12 +1,10 @@
-﻿@using System.IO.Compression
-@using System.Text
-@using csly_cli_api
-@using SharpFileSystem.FileSystems
+﻿@using csly_cli_api
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavManager
 @inject IBlazorDialogService dialogService
 @inject IJSUnmarshalledRuntime JSUnmarshalledRuntime
 @inject ICslyContext cslyContext;
+@inject ICslyProcessor processor;
 
 
 <div>
@@ -91,7 +89,7 @@
         StateHasChanged();
         Task.Run(() =>
         {
-            var dotresult = CslyProcessor.GetDot(cslyContext.Grammar, cslyContext.Source);
+            var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source);
             processing = false;
             StateHasChanged();
             if (dotresult.IsOK)

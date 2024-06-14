@@ -6,7 +6,7 @@
 @inject IBlazorDialogService dialogService
 @inject IJSUnmarshalledRuntime JSUnmarshalledRuntime
 @inject ICslyContext cslyContext;
-
+@inject ICslyProcessor processor;
 
 <div>
     
@@ -167,7 +167,7 @@
 
     private async void ExtractGrammar()
     {
-            var extractedGrammar = CslyProcessor.ExtractGrammar(parserSource, lexerSource);
+            var extractedGrammar = processor.ExtractGrammar(parserSource, lexerSource);
             if (extractedGrammar.IsOK && !string.IsNullOrEmpty(extractedGrammar.Result))
             {
                 cslyContext.Grammar = extractedGrammar.Result;
@@ -182,9 +182,8 @@
 
     private async void Generate()
     {
-       
             Console.WriteLine($"Generate => ns:{nameSpace}, type:{outputType}");
-            var sources = CslyProcessor.GenerateParser(cslyContext.Grammar, nameSpace, outputType);
+            var sources = processor.GenerateParser(cslyContext.Grammar, nameSpace, outputType);
             if (sources.IsOK)
             {
                 byte[] compressedBytes;
@@ -250,7 +249,7 @@
     {
         messages.Clear();
         errors.Clear();
-        var compileResult = CslyProcessor.Compile(cslyContext.Grammar);
+        var compileResult = processor.Compile(cslyContext.Grammar);
         if (compileResult.IsOK)
         {
             messages.Clear();
