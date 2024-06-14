@@ -37,18 +37,18 @@ jobs:
       run: dotnet publish CslyViz.csproj -c Release -o release 
     
     # changes the base-tag in index.html from '/' to 'CslyViz' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to CslyViz
+    - name: Change base-tag in index.html from / to CslyViz/pr-preview/pr-XXXX
       if: github.event.action != 'closed'
-      run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/" \/>/g' release/wwwroot/index.html    
-    - name: Change manifest url in index.html from / to /CslyViz
+      run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/pr-preview\/pr-${{ github.event.number }}\/" \/>/g' release/wwwroot/index.html    
+    - name: Change manifest url in index.html from / to /CslyViz/pr-preview/pr-XXXX
       if: github.event.action != 'closed'
-      run: sed -i 's/<link href="manifest.webmanifest" rel="manifest" \/>/<link href="\/CslyViz\/manifest.webmanifest" rel="manifest" \/>/g' release/wwwroot/index.html
-    - name: Change service-worker url in index.html from / to /CslyViz
+      run: sed -i 's/<link href="manifest.webmanifest" rel="manifest" \/>/<link href="\/CslyViz\/pr-preview\/pr-${{ github.event.number }}\/manifest.webmanifest" rel="manifest" \/>/g' release/wwwroot/index.html
+    - name: Change service-worker url in index.html from / to /CslyViz/pr-preview/pr-XXXX
       if: github.event.action != 'closed'
-      run: sed -i 's/\/service-worker.js/\/CslyViz\/service-worker.js/g' release/wwwroot/index.html  
-    - name: Change favicon url in index.html from / to /CslyViz
+      run: sed -i 's/\/service-worker.js/\/CslyViz\/pr-preview\/pr-${{ github.event.number }}\/service-worker.js/g' release/wwwroot/index.html  
+    - name: Change favicon url in index.html from / to /CslyViz/pr-preview/pr-XXXX
       if: github.event.action != 'closed'
-      run: sed -i 's/href="favicon.png"/href="\/CslyViz\/favicon.png"/g' release/wwwroot/index.html 
+      run: sed -i 's/href="favicon.png"/href="\/CslyViz\/pr-preview\/pr-${{ github.event.number }}\/favicon.png"/g' release/wwwroot/index.html 
     
     # copy index.html to 404.html to serve the same file when a file is not found
     - name: copy index.html to 404.html
