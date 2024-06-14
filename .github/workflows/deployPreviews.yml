@@ -13,7 +13,7 @@ on:
 concurrency: preview-${{ github.ref }}
 
 jobs:
-  deploy-to-github-pages:
+  deploy-preview:
     # use ubuntu-latest image to run steps on
     runs-on: ubuntu-latest
     steps:
