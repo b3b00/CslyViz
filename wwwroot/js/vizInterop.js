@@ -16,6 +16,24 @@
 }
 
 
+function zoomIn(target) {
+    console.log('zoom in '+target);
+    var panZoom = svgPanZoom('#'+target);
+    panZoom.zoomIn();
+}
+
+function zoomOut(target) {
+    console.log('zoom out '+target);
+    var panZoom = svgPanZoom('#'+target);
+    panZoom.zoomOut();
+}
+
+function zoomReset(target) {
+    console.log('zoom reset '+target);
+    var panZoom = svgPanZoom('#'+target);
+    panZoom.resetZoom();
+}
+
 
 function cleanGraph(graph) {
 
