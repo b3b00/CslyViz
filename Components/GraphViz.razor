@@ -2,6 +2,11 @@
 
 <h3>GraphViz</h3>
 
+
+<button @onclick="ZoomIn">+</button>
+<button @onclick="ZoomOut">_</button>
+<button @onclick="Reset">Reset</button>
+
 <div id="@Id"></div>
 
 @code {
@@ -46,5 +51,20 @@
         {
             await JSRuntime.InvokeVoidAsync("cleanViz", Id);
         }
+    }
+
+    private async Task ZoomIn()
+    {
+        await JSRuntime.InvokeVoidAsync("zoomIn",  Id);
+    }
+    
+    private async Task ZoomOut()
+    {
+        await JSRuntime.InvokeVoidAsync("zoomOut",  Id);    
+    }
+    
+    private async Task Reset()
+    {
+        await JSRuntime.InvokeVoidAsync("zoomReset",  Id);
     }
 }
