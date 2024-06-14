@@ -1,6 +1,8 @@
 name: Deploy PR preview
 permissions:
   contents: write
+  pull-requests: write
+
 # Run workflow on every push to the master branch
 on:
     pull_request:
