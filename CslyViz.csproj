@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazorContentEditable" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all" />
     <PackageReference Include="BlazorDialog" Version="2.3.0" />
@@ -61,8 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-<!--    <ProjectReference Include="..\csly-cli\csly-cli-api\csly-cli-api.csproj" />-->
-<!--    <ProjectReference Include="..\csly\src\sly\sly.csproj" />-->
+    <!--    <ProjectReference Include="..\csly-cli\csly-cli-api\csly-cli-api.csproj" />-->
+    <!--    <ProjectReference Include="..\csly\src\sly\sly.csproj" />-->  
+    <!--    <ProjectReference Include="..\BlazorContentEditable\Projects\BlazorContentEditable\BlazorContentEditable.csproj" />-->
   </ItemGroup>
 
   <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
