@@ -14,27 +14,22 @@
         
         <h1>@cslyContext.SampleName</h1>
 
-        <select class="form-control d-flex" @onchange="SelectSample">
-            @foreach (var template in cslyContext.GetSamples())
-            {
-                <option value=@template>@template</option>
-            }
-        </select>
-
-
-        <label for="grammarFile" class="input-label">Importer un fichier grammaire</label>
-        <InputFile id="grammarFile" OnChange="LoadGrammar"/>
-
-        <div class="input"> <!--style="display: flex; flex-direction: row">-->
-
-            <div style="flex-grow:1">
-                <BlazorContentEditableComponent Rows="50" @bind-Value="cslyContext.Grammar" />
-                @* <textarea style="flex-grow: 1" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar"  /> *@
-                @* <div id="gram" contenteditable="true"></div> *@
-                <!--@bind="cslyContext.Grammar" @bind:event="onchange" @bind:after="CleanOutput"/>-->
-            </div>
-
+        <div style="display: block">
+            <label for="preset">grammars : </label>
+            <select class="form-control d-flex" @onchange="SelectSample" id="preset">
+                @foreach (var template in cslyContext.GetSamples())
+                {
+                    <option value=@template>@template</option>
+                }
+            </select>
         </div>
+
+
+        <div style="display: block">
+            <label for="grammarFile" class="input-label">Importer un fichier grammaire</label>
+            <InputFile id="grammarFile" OnChange="LoadGrammar" class="btn btn-primary" />
+        </div>
+
         <button id="submitButton" @onclick="Compile" class="btn btn-primary" disabled="@ActionDisabled">
             Compile
         </button>
@@ -47,6 +42,43 @@
         <button id="extractButton" @onclick="CleanOutput" class="btn btn-primary">
             Clean
         </button>
+
+        <div id="graph">
+            <div id="output">
+                <div id="error">
+                    @foreach (var message in messages)
+                    {
+                    <p style="color:black; background-color: lawngreen ">@message</p>
+                    }
+
+                    @foreach (var error in errors)
+                    {
+                    <p style="color:black; background-color: darksalmon ">@error</p>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <ul>
+            @if (Timings != null && Timings.Any())
+            {
+            @foreach (var time in Timings)
+            {
+            <li>@time.Key : @time.Value ms</li>
+            }
+            }
+        </ul>
+        
+        <div class="input"> <!--style="display: flex; flex-direction: row">-->
+
+            <div style="flex-grow:1">                
+                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" rows="50" />
+              
+            </div>
+
+        </div>
+       
 
         <div id="generate" hidden="@HideGenerate">
             <DialogHeader ShowClose="true">
@@ -89,32 +121,7 @@
     </div>
 
 
-    <div id="graph">
-        <div id="output">
-            <div id="error">
-                @foreach (var message in messages)
-                {
-                    <p style="color:black; background-color: lawngreen ">@message</p>
-                }
-                
-                @foreach (var error in errors)
-                {
-                    <p style="color:black; background-color: darksalmon ">@error</p>
-                }
-                
-            </div>
-        </div>
-    </div>
-
-    <ul>
-        @if (Timings != null && Timings.Any())
-        {
-        @foreach (var time in Timings)
-        {
-        <li>@time.Key : @time.Value ms</li>
-        }
-        }
-    </ul>
+   
 </div>
 
 @code {
@@ -285,6 +292,7 @@
     {
         errors.Clear();
         messages.Clear();
+        Timings.Clear();
         StateHasChanged();
     }
 
