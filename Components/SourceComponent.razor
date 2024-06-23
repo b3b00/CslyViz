@@ -14,57 +14,62 @@
 
         <h1>@cslyContext.SampleName</h1>
     
-        <label for="inputFile" class="input-label">Importer un fichier source</label>
-        <InputFile id="inputFile" OnChange="LoadSource"/>
-        <div class="input"> <!--style="display: flex; flex-direction: row">-->
-
-            <div style="flex-grow:1">
-                <textarea style="flex-grow: 1" i d="inputBox" maxlength="2000" spellcheck="false" @bind="cslyContext.Source" />
-            </div>
-
+        <div style="display: block">
+            <label for="inputFile" class="input-label">Importer un fichier source</label>
+            <InputFile id="inputFile" OnChange="LoadSource" class="btn btn-primary"/>
         </div>
+
         <button id="submitButton" @onclick="Compile" class="btn btn-primary" disabled="@ActionDisabled">
             Compile
         </button>
-        
-      
         <button id="submitButton" @onclick="GetJson" class="btn btn-primary" disabled="@ActionDisabled">
             Download JSON...
         </button>
-        <button id="extractButton" @onclick="CleanOutput" class="btn btn-primary">
+        <button id="cleanButton" @onclick="CleanOutput" class="btn btn-primary">
             Clean
         </button>
+
+
+        <div id="graph">
+            <div id="output">
+                <div id="error">
+                    @foreach (var message in messages)
+                    {
+                    <p style="color:black; background-color: lawngreen ">@message</p>
+                    }
+
+                    @foreach (var error in errors)
+                    {
+                    <p style="color:black; background-color: darksalmon ">@error</p>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <ul>
+            @if (Timings != null && Timings.Any())
+            {
+            @foreach (var time in Timings)
+            {
+            <li>@time.Key : @time.Value ms</li>
+            }
+            }
+        </ul>
+        
+        <div class="input"> <!--style="display: flex; flex-direction: row">-->
+
+            <div style="flex-grow:1">
+                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="cslyContext.Source" />
+            </div>
+
+        </div>
+      
   
     </div>
 
     
 
 
-    <div id="graph">
-        <div id="output">
-            <div id="error">
-                @foreach (var message in messages)
-                {
-                    <p style="color:black; background-color: lawngreen ">@message</p>
-                }
-                
-                @foreach (var error in errors)
-                {
-                    <p style="color:black; background-color: darksalmon ">@error</p>
-                }
-                
-            </div>
-        </div>
-    </div>
-    <ul>
-        @if (Timings != null && Timings.Any())
-        {
-        @foreach (var time in Timings)
-        {
-        <li>@time.Key : @time.Value ms</li>
-        }
-        }
-    </ul>
 </div>
 
 @code {
@@ -149,6 +154,7 @@
     {
         errors.Clear();
         messages.Clear();
+        Timings.Clear();
         StateHasChanged();
     }
 }
