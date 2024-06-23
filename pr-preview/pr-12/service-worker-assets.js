@@ -109,12 +109,8 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-OU9rd5HsKvYUl1eN3eqbCGLbJHyABFsm2Sjs\/zTFI80=",
+      "hash": "sha256-rCH2NzgnEKAPEdXCIeSlX5bMbGQG8goiPtb9ruM7Guw=",
       "url": "_framework\/blazor.boot.json"
-    },
-    {
-      "hash": "sha256-gMcRrlCUxkOoHAF9PTAQlWcaFdT7jWThpqyHGhS8eyE=",
-      "url": "_framework\/BlazorContentEditable.wasm"
     },
     {
       "hash": "sha256-1oplTxn6V5go+ACKH1MYwA8BCtKwdUgdsQWWaEHmKk8=",
@@ -141,11 +137,11 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-bPswQ3iyyY3IzJCTIpZsh1w7zAT6orbaeWL8ZNwgsQU=",
+      "hash": "sha256-+yABP\/JhEhqQfliPVxn\/yR\/djqKFg5rTCYC2gBYots4=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
-      "hash": "sha256-nbRvPZ6f5FIHoXRO57h2yLJmVS+ZMX\/IO+dAOYSCcB8=",
+      "hash": "sha256-IYIIYmqZBd0wd+zFwFQxmHSzoIOXxrpRcG5RZe3CBmk=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -211,10 +207,6 @@
     {
       "hash": "sha256-nqei8+5eMGgRVXqKDZR8o+iDuu73hPj77FPRCbfXAMg=",
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
-    },
-    {
-      "hash": "sha256-9+\/ja\/5BsxsusyGkAe0mOdQJKloKQ9FIjwYIN4FSFyI=",
-      "url": "_framework\/netstandard.wasm"
     },
     {
       "hash": "sha256-erKuIr8Gjq+X\/Ji4X+pGauW71\/eyGT7GHVu8k+7ie8I=",
@@ -421,10 +413,6 @@
       "url": "_framework\/System.Text.RegularExpressions.wasm"
     },
     {
-      "hash": "sha256-SuFI0QM5CMdebXBBnTM3f5hAFlDN2hefaqJoUQqhQPI=",
-      "url": "_framework\/System.Threading.Tasks.Extensions.wasm"
-    },
-    {
       "hash": "sha256-ljew6M1hpcMihjdPrSgvyCKlnvq3Clf0Y8o+tRNbf2A=",
       "url": "_framework\/System.Threading.Tasks.Parallel.wasm"
     },
@@ -565,10 +553,6 @@
       "url": "CslyViz.styles.css"
     },
     {
-      "hash": "sha256-B\/EegM2\/UH3\/PH6s4heqp4PyELl3RlcfGclujAfrrSM=",
-      "url": "_content\/BlazorContentEditable\/BlazorContentEditable.js"
-    },
-    {
       "hash": "sha256-o9CPzIuZXbQQ+e30BNwJpk+2LfeD9nFeT4Qmg4THLrk=",
       "url": "_content\/BlazorDialog\/styles.css"
     },
@@ -577,5 +561,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "DgPAdSa9"
+  "version": "ryoXeNkh"
 };
