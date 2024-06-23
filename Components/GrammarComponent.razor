@@ -28,7 +28,7 @@
         <div class="input"> <!--style="display: flex; flex-direction: row">-->
 
             <div style="flex-grow:1">
-                <BlazorContentEditableComponent rows=50 @bind-Value="cslyContext.Grammar" />
+                <BlazorContentEditableComponent Rows="50" @bind-Value="cslyContext.Grammar" />
                 @* <textarea style="flex-grow: 1" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar"  /> *@
                 @* <div id="gram" contenteditable="true"></div> *@
                 <!--@bind="cslyContext.Grammar" @bind:event="onchange" @bind:after="CleanOutput"/>-->
