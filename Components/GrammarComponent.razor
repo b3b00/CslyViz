@@ -70,18 +70,11 @@
             }
         </ul>
         
-        <div class="input"> <!--style="display: flex; flex-direction: row">-->
-
-            <div style="flex-grow:1">                
-                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" rows="50" />
-              
-            </div>
-
-        </div>
+    
        
 
         <div id="generate" hidden="@HideGenerate">
-            <DialogHeader ShowClose="true">
+            <DialogHeader ShowClose="false">
                 <h4>Source generation options</h4>
             </DialogHeader>
             <DialogBody>
@@ -92,13 +85,13 @@
                 <input type="text" id="type" @bind="outputType"/>
             </DialogBody>
             <DialogFooter>
-                <button type="button" class="btn btn-primary" @onclick="() => { HideGenerate = true; Generate(); }">ok</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideGenerate = true; Generate(); }">Ok</button>
                 <button type="button" class="btn btn-secondary" @onclick="() => { HideGenerate = true; }">Cancel</button>
             </DialogFooter>
         </div>
 
         <div hidden="@HideExtract">
-            <DialogHeader ShowClose="true">
+            <DialogHeader ShowClose="false">
                 <h4>Grammar extraction</h4>
             </DialogHeader>
             <DialogBody>
@@ -112,9 +105,18 @@
 
             </DialogBody>
             <DialogFooter>
-                <button type="button" class="btn btn-primary" @onclick="() => { HideExtract = true; ExtractGrammar(); }">Yes</button>
-                <button type="button" class="btn btn-secondary" @onclick="() => { HideExtract = true; }">No</button>
+                <button type="button" class="btn btn-primary" @onclick="() => { HideExtract = true; ExtractGrammar(); }">Ok</button>
+                <button type="button" class="btn btn-secondary" @onclick="() => { HideExtract = true; }">Cancel</button>
             </DialogFooter>
+
+        </div>
+
+        <div class="input"> <!--style="display: flex; flex-direction: row">-->
+
+            <div style="flex-grow:1">
+                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" rows="50" />
+
+            </div>
 
         </div>
 
