@@ -58,8 +58,9 @@
         
         <div class="input"> <!--style="display: flex; flex-direction: row">-->
 
-            <div style="flex-grow:1">
-                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="cslyContext.Source" />
+            <div style="flex-direction: row; display: flex">
+                <textarea cols="1" @bind="Lines"></textarea>
+                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Source" @onkeyup="() => SetLines(Source)" />
             </div>
 
         </div>
@@ -82,10 +83,47 @@
 
     private string dot;
 
+    private string? Lines { get; set; }
+    
+    private string Source
+    {
+        get => cslyContext.Source ?? "";
+        set
+        {
+            cslyContext.Source = value;
+            SetLines(value);
+            CleanOutput();
+        }
+    }
+    
     protected override async void OnInitialized()
     {
     }
 
+
+    private void SetLines(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            using (var reader = new StringReader(value))
+            {
+                var builder = new StringBuilder();
+                string line = reader.ReadLine();
+                int i = 0;
+                while (line != null)
+                {
+                    builder.AppendLine(i.ToString());
+                    line = reader.ReadLine();
+                    i++;
+                }
+
+                Lines = builder.ToString();
+                return;
+            }
+        }
+
+        Lines = "0";
+    }
    
 
     private async Task LoadSource(InputFileChangeEventArgs e)
@@ -152,9 +190,9 @@
   
     private void CleanOutput()
     {
-        errors.Clear();
-        messages.Clear();
-        Timings.Clear();
+        errors?.Clear();
+        messages?.Clear();
+        Timings?.Clear();
         StateHasChanged();
     }
 }
