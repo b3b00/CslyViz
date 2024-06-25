@@ -49,6 +49,10 @@
       "url": "js\/download.js"
     },
     {
+      "hash": "sha256-47DEQpj8HBSa+\/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "url": "js\/editor.js"
+    },
+    {
       "hash": "sha256-Ogqs510LFnekr9o7OLdpelaaAmNss9egQRTyzCqV2NQ=",
       "url": "js\/full.render.js"
     },
@@ -109,7 +113,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-a2nHNLo6q4OfAnf4LtTltgiVciysCxydT4ylT1is+Tc=",
+      "hash": "sha256-Y2W8iv6eiMMjZ3GDUUIYEENQb3Rv+bvgKawz66MFEp8=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -137,7 +141,7 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-fl6vSPIfKiQafwho7617WHP\/T3HwbV03Bt5IjzXnVEU=",
+      "hash": "sha256-wft0LIGaiowSY6B+PMrvlIvU+A\/rhXnG8nX\/aqqj5Xo=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -561,5 +565,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "Y1MFzsC5"
+  "version": "Vjw6Ar0h"
 };
