@@ -113,12 +113,14 @@
 
         <div class="input"> <!--style="display: flex; flex-direction: row">-->
 
-            <div style="flex-grow:1">
-                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" rows="50" />
-
+            <div style="flex-direction: row; display: flex">
+                <textarea cols="4" @bind="Lines"></textarea>
+                <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" @onkeyup="() => SetLines(Grammar)" />
             </div>
 
         </div>
+
+        <CodeEditor @bind-Value="Grammar"></CodeEditor>
 
     </div>
 
@@ -150,13 +152,16 @@
 
     private string Grammar
     {
-        get => cslyContext.Grammar;
+        get => cslyContext.Grammar ?? "";
         set
         {
             cslyContext.Grammar = value;
+            SetLines(value);
             CleanOutput();
         }
     }
+    
+    private string Lines { get; set; }
     
     protected override async void OnInitialized()
     {
@@ -171,6 +176,29 @@
     }
 
 
+    private void SetLines(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            using (var reader = new StringReader(value))
+            {
+                var builder = new StringBuilder();
+                string line = reader.ReadLine();
+                int i = 0;
+                while (line != null)
+                {
+                    builder.AppendLine(i.ToString());
+                    line = reader.ReadLine();
+                    i++;
+                }
+
+                Lines = builder.ToString();
+                return;
+            }
+        }
+
+        Lines = "0";
+    }
 
 
    
@@ -294,7 +322,11 @@
     {
         errors.Clear();
         messages.Clear();
-        Timings.Clear();
+        if (Timings != null)
+        {
+            Timings.Clear();
+        }
+
         StateHasChanged();
     }
 
