@@ -14,6 +14,7 @@ builder.Services.AddSingleton<ICslyProcessor, CslyProcessor>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton(serviceProvider => (IJSInProcessRuntime)serviceProvider.GetRequiredService<IJSRuntime>());
 builder.Services.AddSingleton(serviceProvider => (IJSUnmarshalledRuntime)serviceProvider.GetRequiredService<IJSRuntime>());
+builder.Services.AddSingleton<ClipboardService>();
 
 
 builder.Services.AddBlazorDialog();
