@@ -8,8 +8,7 @@
     <RootNamespace>CslyViz</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="csly-cli-api" Version="1.3.9" />
+  <ItemGroup>    
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all" />
     <PackageReference Include="BlazorDialog" Version="2.3.0" />
