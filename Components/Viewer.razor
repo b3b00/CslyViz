@@ -37,7 +37,7 @@
     {
         <h4>processing...</h4>
         <img src="image/spinner.svg" width="50px"/>
-    } else if (!string.IsNullOrEmpty(dot)){
+    } else if (!string.IsNullOrEmpty(cslyContext.DotGraph)){
         <div>
             
             @if (ShowCode)
@@ -59,7 +59,7 @@
                 }
             }
         </ul>
-        <GraphViz DotGraphViz="@dot" Id="bololo"></GraphViz>
+        <GraphViz DotGraphViz="@cslyContext.DotGraph" Id="bololo"></GraphViz>
     }
     
 </div>
@@ -75,8 +75,6 @@
     private IDictionary<string,long> Timings { get; set; }
 
     private bool ActionDisabled => string.IsNullOrEmpty(cslyContext.Grammar) || string.IsNullOrEmpty(cslyContext.Source);
-
-    private string dot;
 
     private bool processing = false;
 
@@ -107,7 +105,7 @@
             if (dotresult.IsOK)
             {
                 messages.Add("Parse OK");
-                dot = dotresult.Result;
+                cslyContext.DotGraph = dotresult.Result;
                 Timings = dotresult.Timings;
                 StateHasChanged();
             }
@@ -135,9 +133,9 @@
         Timings = null;
         messages.Clear();
         errors.Clear();
+        cslyContext.DotGraph = null;
         StateHasChanged();
-        dot = null;
-    }
+  }
 
 
     private List<string> messages = new List<string>();

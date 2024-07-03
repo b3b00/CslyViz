@@ -8,6 +8,8 @@ public interface ICslyContext
     string Grammar { get; set; }
     
     string Source { get; set; }
+    
+    string DotGraph { get; set; }
 
     void SetSample(string sampleName);
 

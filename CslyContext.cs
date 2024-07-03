@@ -24,11 +24,26 @@ public class CslyContext : ICslyContext
         set
         {
             _sampleName = "";
+            _dotGraph = "";
             _grammar = value;
         }
     }
 
-    public string Source { get; set; }
+    public string DotGraph
+    {
+        get => _dotGraph;
+        set => _dotGraph = value;
+    }
+
+    public string Source
+    {
+        get => _source;
+        set
+        {
+            _dotGraph = "";
+            _source = value;
+        }
+    }
 
     public CslyContext()
     {
@@ -40,12 +55,14 @@ public class CslyContext : ICslyContext
         {
             Grammar = "";
             Source = "";
+            _dotGraph = "";
         }
         else
         {
             Grammar = GetSampleGrammar(sampleName);
             Source = getSampleSource(sampleName);
             _sampleName = sampleName;
+            _dotGraph = "";
         }
     }
 
@@ -77,6 +94,10 @@ public class CslyContext : ICslyContext
         { "While language", "while.txt" },
         { "indented While language", "indented-while.txt" },
     };
+
+    private string _dotGraph;
+    private string _source;
+
     public List<string> GetSamples()
     {
         return Samples.Keys.ToList();
