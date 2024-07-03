@@ -43,7 +43,7 @@
             @if (ShowCode)
             {
             <button id="hidethiscode" @onclick="ToggleCode" class="btn btn-primary bi-eye-slash-fill">Hide this code!</button>
-                <pre>@cslyContext.Source</pre>
+                <pre style="border: dashed 1px;border-radius: 5px;padding: 5px;">@cslyContext.Source</pre>
             }
             else
             {
