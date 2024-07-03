@@ -30,7 +30,6 @@
                 {
                     <p style="color:black; background-color: darksalmon ">@error</p>
                 }
-    
             </div>
         </div>
     </div>
@@ -39,6 +38,18 @@
         <h4>processing...</h4>
         <img src="image/spinner.svg" width="50px"/>
     } else if (!string.IsNullOrEmpty(dot)){
+        <div>
+            
+            @if (ShowCode)
+            {
+            <button id="hidethiscode" @onclick="ToggleCode" class="btn btn-primary bi-eye-slash-fill">Hide this code!</button>
+                <pre>@cslyContext.Source</pre>
+            }
+            else
+            {
+            <button id="showmethecode" @onclick="ToggleCode" class="btn btn-primary bi-eye-fill">Show me the code!</button>
+            }
+        </div>
         <ul>
             @if (Timings != null && Timings.Any())
             {
@@ -57,6 +68,8 @@
 
     [Parameter] public string? Title { get; set; }
 
+    private bool ShowCode { get; set; } = false;
+
     private bool isComputing { get; set; } = false;
     
     private IDictionary<string,long> Timings { get; set; }
@@ -72,7 +85,10 @@
     }
 
 
-
+    private async void ToggleCode()
+    {
+        ShowCode = !ShowCode;
+    }
 
     private async void Render()
     {
