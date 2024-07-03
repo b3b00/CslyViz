@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-5x14rpmxEv4c+9wOrh6FlEAyViOFYx7vWuJTwhvlkEc=",
+      "hash": "sha256-APy2CmX614fxU1yrieypBU1E82L9DT1EISFOwDjFyKQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -137,11 +137,11 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-MdVd45xB\/R1HZEQC7rGsJMQWjO+x3rk4Ui+jJe\/iWPk=",
+      "hash": "sha256-0tTE5JRsjJqemFRzCHq3MFPOzBTuWnRwxk7b9QtqhCY=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
-      "hash": "sha256-nbRvPZ6f5FIHoXRO57h2yLJmVS+ZMX\/IO+dAOYSCcB8=",
+      "hash": "sha256-IYIIYmqZBd0wd+zFwFQxmHSzoIOXxrpRcG5RZe3CBmk=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -561,5 +561,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "R\/V7wM1d"
+  "version": "jQssCjvy"
 };
