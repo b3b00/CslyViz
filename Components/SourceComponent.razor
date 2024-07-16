@@ -166,18 +166,24 @@
     {
 ;       errors.Clear();
         messages.Clear();
-        
-        var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source);
-        if (dotresult.IsOK)
+        try
         {
-            Timings = dotresult.Timings;
-            messages.Add("parse OK");
-            StateHasChanged();
+            var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source);
+            if (dotresult.IsOK)
+            {
+                Timings = dotresult.Timings;
+                messages.Add("parse OK");
+                StateHasChanged();
+            }
+            else
+            {
+                errors.AddRange(dotresult.Errors);
+                StateHasChanged();
+            }
         }
-        else
+        catch (Exception e)
         {
-            errors.AddRange(dotresult.Errors);
-            StateHasChanged();            
+            errors.Add(e.InnerException?.Message ?? e.Message);
         }
     }
     
