@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-Het5VbX68pYs9VaqUItC2OmdaGcpe00Q6DdbOFBvDzI=",
+      "hash": "sha256-z5iTl0TfukcOY9qB1tdT\/bJZSNG\/7BvulEmF072xxNU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -137,7 +137,7 @@
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-y4uAp5uccmWQ1hJ9Qpr9zdFYCfS5A9TqQ7TpMKPTpas=",
+      "hash": "sha256-gNqJlxxHJzTP0WQguWCUJO1ZK7Hcsbm1sbdhFqXA8LI=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -561,5 +561,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "NyG\/Hs4e"
+  "version": "NIu+rxu9"
 };
