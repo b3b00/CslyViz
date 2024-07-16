@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CslyViz",
   "resources": {
-    "hash": "sha256-Ee14qhQ5bWEb3kkkf8L15czNNR1AJbunimU/mEqlUbA=",
+    "hash": "sha256-YLNQiVaqO/Jylw4W+yEtvNIU4zvUp4V7GLzx+x40KU8=",
     "jsModuleNative": {
       "dotnet.native.8.0.7.pvkr2na9g4.js": "sha256-tFsxPBbhkdn6GKNBKvCRLzrfAHdyM86odYTe0MtrwMk="
     },
@@ -18,12 +18,12 @@
     },
     "assembly": {
       "BlazorDialog.wasm": "sha256-1oplTxn6V5go+ACKH1MYwA8BCtKwdUgdsQWWaEHmKk8=",
-      "csly-cli-api.wasm": "sha256-aW7Obc3wWRNhsKWlTdwCv4dm73KKij8oTauU8WlsMgs=",
-      "csly-cli-builder.wasm": "sha256-gWf+GzD2Dtl91CzTbsyp3uqVvDcJTSNf6ZqxYaY+u24=",
-      "csly-cli-extractor.wasm": "sha256-4apvOEpQhlYTCaflRElE26mxCaiXY+G3uDUPsIKPW0Y=",
-      "csly-cli-model.wasm": "sha256-8V8kgQj/mCqfPQo/FgNtmGCwqTctzP9Z9rXQEEYdRHs=",
-      "csly-cli-parser.wasm": "sha256-ShWXuIigqtzj7A2kFQBaQg0zyBGq7RvsDJL33kMW79I=",
-      "CslyViz.wasm": "sha256-gNqJlxxHJzTP0WQguWCUJO1ZK7Hcsbm1sbdhFqXA8LI=",
+      "csly-cli-api.wasm": "sha256-sXCnIvoi7QhCQwA0g1C4ha7Gu6F/lss95Ks/dFqkzH4=",
+      "csly-cli-builder.wasm": "sha256-ySoNeAv9gSv6iS5wNXeaG80ZeTwVzQoDAfWy9KJSZHQ=",
+      "csly-cli-extractor.wasm": "sha256-u0tzrULWwGd2dE4QliZzqKbwZ+EfMSEYk+1aF3QCgW0=",
+      "csly-cli-model.wasm": "sha256-/qNRVwlshvJfgfrIvtdLdahSTrSSw262mAXKHTpZ7wk=",
+      "csly-cli-parser.wasm": "sha256-h63RvSd+u1WC9xCG2ytBYNCgoRAmGyi+mVVuDytI/7w=",
+      "CslyViz.wasm": "sha256-hBIMKpQJ3Y4faOmtACvcK3i7JN4yT+CUjL/uW8ELLOA=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-IYIIYmqZBd0wd+zFwFQxmHSzoIOXxrpRcG5RZe3CBmk=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-0jIv6ZCKARjk0I4G2/l7GtYWUZ2ef8QZnqVx5+R4S0A=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-YNCGOTDwQ2XIZEmtUMXPnNDvO416NI76VEh3irNdJ+k=",
@@ -43,7 +43,7 @@
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-nqei8+5eMGgRVXqKDZR8o+iDuu73hPj77FPRCbfXAMg=",
       "Newtonsoft.Json.wasm": "sha256-erKuIr8Gjq+X/Ji4X+pGauW71/eyGT7GHVu8k+7ie8I=",
       "SharpCoreFileSystem.wasm": "sha256-YsYsEnHAE3Znajzeiw1jzegCtm5K0TqpUYQYN85a0XQ=",
-      "sly.wasm": "sha256-mRL/D13sf2AhDeJ8wQhtQtOgRoqAEhNFwGuirk58NDg=",
+      "sly.wasm": "sha256-XsyP32grLW66S0ZbnewIQH6o2mVS20lan1Yc5cxzp7s=",
       "System.Collections.Concurrent.wasm": "sha256-WHz5judy6FwvUR4pGIUxxzDBsUF52qWq/ReqmlTb4Kg=",
       "System.Collections.Immutable.wasm": "sha256-DL9g34w9Fbrqc5A5pB0xHKqz+wgHCNHUq3vQ2exTB34=",
       "System.Collections.NonGeneric.wasm": "sha256-L/os812+hUzwY5qync248AikvTEzxxxxolIj1nepj4w=",
