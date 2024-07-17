@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CslyViz",
   "resources": {
-    "hash": "sha256-mPvCGWEbOeIlIQ/9fT/R2cN2YQhhV+6dAohN0v21K2E=",
+    "hash": "sha256-pcqyI/sLCHEOfIkqsrsk7YvBR0Me7rCie2ZadiwFYv4=",
     "jsModuleNative": {
       "dotnet.native.8.0.7.pvkr2na9g4.js": "sha256-tFsxPBbhkdn6GKNBKvCRLzrfAHdyM86odYTe0MtrwMk="
     },
@@ -18,12 +18,12 @@
     },
     "assembly": {
       "BlazorDialog.wasm": "sha256-1oplTxn6V5go+ACKH1MYwA8BCtKwdUgdsQWWaEHmKk8=",
-      "csly-cli-api.wasm": "sha256-yoC+R7Y3kjFvXmCrw/bpZnEItkPWt8OGWoIca/e4FZs=",
-      "csly-cli-builder.wasm": "sha256-/tbxeTdghMMMCMH9XT4vujD6NP0ZTARqohtK2v6zpW0=",
+      "csly-cli-api.wasm": "sha256-FSqehpgJCOUNHnPzhJIwDUgkxaPUa48OqJ7RMSVqu9I=",
+      "csly-cli-builder.wasm": "sha256-qje4KB1V03TcnY4mpLR+8hxnKMB7SU0zf2HOJBYjLII=",
       "csly-cli-extractor.wasm": "sha256-RDloMjQ3f/g+YHOeAvEO5DxjxWtIVobkJGG0HWFotr0=",
       "csly-cli-model.wasm": "sha256-fY4pmahaM9XajqSSBBcLbyrqrRhNYucfn3G8DznVCBE=",
       "csly-cli-parser.wasm": "sha256-gdhmpezITYjpae1XjGwLxALv2G1HDakyuxxiIRoyz3Q=",
-      "CslyViz.wasm": "sha256-pRfIlwaGiWOPmqDoQnIdcS4t3rQ9ZXI2269PU5xUWQk=",
+      "CslyViz.wasm": "sha256-9l0eVvID9t+6bpe60Ln2nMpWy2TVpA7ikSjthVDB+T0=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-IYIIYmqZBd0wd+zFwFQxmHSzoIOXxrpRcG5RZe3CBmk=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-0jIv6ZCKARjk0I4G2/l7GtYWUZ2ef8QZnqVx5+R4S0A=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-YNCGOTDwQ2XIZEmtUMXPnNDvO416NI76VEh3irNdJ+k=",
