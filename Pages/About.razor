@@ -1,5 +1,7 @@
 ﻿@page "/About"
 @using System.Reflection
+@using csly_cli_api
+@using sly.lexer
 <h3>About</h3>
 
 @code {
@@ -11,8 +13,8 @@
     </div>
     <ul>
         <li><a href="https://viz-js.com/">viz.js</a> : the JS lib that render a syntax tree as a graph</li>
-        <li><a href="https://github.com/b3b00/csly">CSLY</a> : the parser generator</li>
-        <li><a href="https://github.com/b3b00/csly-cli">CSLY CLI</a> : the CSLY companion tool that help write coe for CSLY from a formal grammar definition</li>
+        <li><a href="https://github.com/b3b00/csly">CSLY @CslyVersion</a> : the parser generator</li>
+        <li><a href="https://github.com/b3b00/csly-cli">CSLY CLI @CslyCliVersion</a> : the CSLY companion tool that help write coe for CSLY from a formal grammar definition</li>
     </ul>
 </div>
 
@@ -23,8 +25,20 @@
     
     protected string Hash = "";
 
+    protected string CslyVersion = "";
+
+    protected string CslyCliVersion = "";
     protected override async void OnInitialized()
     {
+        var csly = typeof(Token<>).Assembly;
+        var cslyCli = typeof(CslyProcessor).Assembly;
+        var cslyName = csly.GetName();
+        CslyVersion = cslyName.Version?.ToString() ?? "";
+        
+        var cslyCliName = cslyCli.GetName();
+        CslyCliVersion = cslyCliName.Version?.ToString() ?? "";
+        
+        
         var version = ""; 
             
         var appAssembly = this.GetType().Assembly;
