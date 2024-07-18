@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CslyViz", "CslyViz-debug.csproj", "{09EB2366-B9A6-42BC-A03F-F88C68647897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csly-cli-api", "..\csly-cli\csly-cli-api\csly-cli-api-debug.csproj", "{D4D1F6D4-1CF4-437D-8872-E442CB7F2A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sly", "..\csly\src\sly\sly.csproj", "{77D3B773-C2D7-4EF5-A2FF-0BE40CCEF372}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09EB2366-B9A6-42BC-A03F-F88C68647897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09EB2366-B9A6-42BC-A03F-F88C68647897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09EB2366-B9A6-42BC-A03F-F88C68647897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09EB2366-B9A6-42BC-A03F-F88C68647897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4D1F6D4-1CF4-437D-8872-E442CB7F2A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D1F6D4-1CF4-437D-8872-E442CB7F2A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4D1F6D4-1CF4-437D-8872-E442CB7F2A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4D1F6D4-1CF4-437D-8872-E442CB7F2A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D3B773-C2D7-4EF5-A2FF-0BE40CCEF372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D3B773-C2D7-4EF5-A2FF-0BE40CCEF372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D3B773-C2D7-4EF5-A2FF-0BE40CCEF372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D3B773-C2D7-4EF5-A2FF-0BE40CCEF372}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
