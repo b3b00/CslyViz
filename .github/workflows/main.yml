@@ -26,8 +26,6 @@ jobs:
 
     #- name: Change base-tag in app.razor from / to CslyViz
     #  run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/" \/>/g' BlazorVizView/App.razor
-    - name: install wasm tools
-      run: dotnet workload install wasm-tools
     - name: Publish .NET Core Project
       run: dotnet publish CslyViz.csproj -c Release -o release 
     
