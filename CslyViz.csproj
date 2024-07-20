@@ -10,7 +10,7 @@
   </PropertyGroup>
 
 <PropertyGroup>
-  <RunAOTCompilation>true</RunAOTCompilation>
+  <!--RunAOTCompilation>true</RunAOTCompilation-->
 </PropertyGroup>
 
   <ItemGroup>    
