@@ -22,7 +22,7 @@ jobs:
         dotnet-version: '8.0'
         include-prerelease: true   
     - name: install wasm tools
-      run: dotnet workload install wasm-tools  CslyViz.csproj 
+      run: dotnet workload install wasm-tools  
 
     # publishes Blazor project to the release-folderl
 
