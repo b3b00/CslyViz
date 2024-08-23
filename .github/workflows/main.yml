@@ -20,13 +20,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '8.0'
-        include-prerelease: true
+        include-prerelease: true   
+#  - name: install wasm tools
+#      run: dotnet workload install wasm-tools  
 
     # publishes Blazor project to the release-folderl
 
     #- name: Change base-tag in app.razor from / to CslyViz
     #  run: sed -i 's/<base href="\/" \/>/<base href="\/CslyViz\/" \/>/g' BlazorVizView/App.razor
-      
     - name: Publish .NET Core Project
       run: dotnet publish CslyViz.csproj -c Release -o release 
     
