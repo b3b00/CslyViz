@@ -5,4 +5,11 @@ while i < 11 do
     r := r * i
     print r
     print i
-    i := i + 1 
+    i := i + 1
+    
+v1 := 48
+v2 := 152
+fstring := $""v1 :> {v1} < v2 :> {v2} < v3 :> {v1+v2} <  v4 :>{$""hello,"".$"" world""}< v5 :>{(? b -> $""true"" | $""false"")}< - end""
+print fstring
+
+return 100     

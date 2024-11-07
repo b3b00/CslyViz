@@ -41,35 +41,77 @@ genericLexer IndentedWhileTokenGeneric;
 [KeyWord] RETURN : "RETURN";
 [KeyWord] RETURN : "return";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [AlphaNumDashId] IDENTIFIER;
-
-[String] STRING;
 
 [Int] INT;
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] GREATER : ">";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] LESSER : "<";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] EQUALS : "==";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] DIFFERENT : "!=";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] CONCAT : ".";
 
 [Sugar] ASSIGN : ":=";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] PLUS : "+";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] MINUS : "-";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] TIMES : "*";
 
+[Mode("DefaultLexerMode", "fstringExpression")]
 [Sugar] DIVIDE : "/";
+
+[Mode("default", "fstringExpression")]
+[Sugar] QUESTION : "?";
+
+[Mode("default", "fstringExpression")]
+[Sugar] ARROW : "->";
+
+[Mode("default", "fstringExpression")]
+[Sugar] OPEN_PAREN : "(";
+
+[Mode("default", "fstringExpression")]
+[Sugar] CLOSE_PAREN : ")";
+
+[Mode("default", "fstringExpression")]
+[Sugar] COLON : "|";
 
 [Sugar] SEMICOLON : ";";
 
 [SingleLineComment] COMMENT : "#";
+
+[Push("fstringExpression")]
+[Mode("fstring")]
+[Sugar] OPEN_FSTRING_EXPPRESSION : "{";
+
+[Pop]
+[Mode("fstringExpression")]
+[Sugar] CLOSE_FSTRING_EXPPRESSION : "}";
+
+[Mode("DefaultLexerMode", "fstringExpression")]
+[Push("fstring")]
+[Sugar] OPEN_FSTRING : "$\"";
+
+[Mode("fstring", "fstringExpression")]
+[Pop]
+[Sugar] CLOSE_FSTRING : "\"";
+
+[Mode("fstring")]
+[UpTo] FSTRING_CONTENT : "{" "\""; 
 
 
 
@@ -92,10 +134,14 @@ statement: IDENTIFIER ASSIGN[d] IndentedWhileParserGeneric_expressions;
 statement: SKIP[d];
 statement: RETURN[d] IndentedWhileParserGeneric_expressions;
 statement: PRINT[d] IndentedWhileParserGeneric_expressions;
+primary : QUESTION[d] IndentedWhileParserGeneric_expressions ARROW[d] IndentedWhileParserGeneric_expressions COLON[d] IndentedWhileParserGeneric_expressions;
+primary : OPEN_PAREN[d] IndentedWhileParserGeneric_expressions CLOSE_PAREN[d];
+primary : OPEN_FSTRING[d] fstring_element* CLOSE_FSTRING[d];
+fstring_element : FSTRING_CONTENT;
+fstring_element : OPEN_FSTRING_EXPPRESSION[d] IndentedWhileParserGeneric_expressions CLOSE_FSTRING_EXPPRESSION[d];
 primary: INT;
 primary: TRUE;
 primary: FALSE;
-primary: STRING;
 primary: IDENTIFIER;
 [Operand] operand: primary;
 [Right 10] PLUS;
