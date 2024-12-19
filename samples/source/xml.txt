@@ -1,11 +1,9 @@
-<?instruction do="something"?>
-<data>
-    <one>1</one>
-    <self me="myslef"/>
-    <!-- comment -->
-    <?process?>
-    <two three="3">
-        <fortytwo>42</fortytwo>
-    2
-    </two>
-</data>
+<?xml version="1.0"?>
+hello
+<!-- starting doc -->
+<root name="root">
+data
+<!-- middle of the doc -->
+</root>       
+<!-- ending doc -->
+goodbye

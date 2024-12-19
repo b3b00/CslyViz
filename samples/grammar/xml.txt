@@ -11,8 +11,15 @@ genericLexer MinimalXmlLexer;
 [Push("pi")]
 [Sugar] OPEN_PI : "<?";
 
-[Mode]
-[MultiLineComment] COMMENT : "<!--" "-->";
+[Push("comment")]
+[Sugar] OPEN_COMMENT : "<!--";
+
+[Mode("comment")]
+[UpTo] COMMENT_CONTENT : "-->"; 
+
+[Mode("comment")]
+[Pop]
+[Sugar] CLOSE_COMMENT : "-->";
 
 [Mode("tag")]
 [Mode("pi")]
@@ -40,24 +47,28 @@ genericLexer MinimalXmlLexer;
 
 parser MinimalXmlParser;
 
--> document : misc* element misc*;
+@subNodes(leaders,null,trailers);
+-> document : [comment | processing-instruction | content]* element [comment | processing-instruction | content]*;
 
 @node(selfClosingTag);
-element : OPEN[d] ID attributes SLASH[d] CLOSE[d];
+element : OPEN[d] ID attribute* SLASH[d] CLOSE[d];
 
-opentag : OPEN[d] ID attributes CLOSE[d];
+opentag : OPEN[d] ID attribute* CLOSE[d];
 
 closetag : OPEN[d] SLASH[d] ID CLOSE[d];
 
 @subNodes(null, elements, null);
 @node(tag);
 element : opentag [element|processing-instruction|comment|content]* closetag;
+
 misc : [comment | processing-instruction | content];
-comment : COMMENT;
+
+comment : OPEN_COMMENT[d] COMMENT_CONTENT CLOSE_COMMENT[d];
 
 @node(processing);
-processing-instruction : OPEN_PI[d] ID attributes CLOSE_PI[d];
-attributes : attribute*;
+processing-instruction : OPEN_PI[d] ID attribute* CLOSE_PI[d];
+
 attribute: ID EQUALS[d] VALUE;
 
 content : CONTENT;
+
