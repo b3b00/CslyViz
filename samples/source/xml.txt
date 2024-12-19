@@ -1,10 +1,11 @@
-<xml>
+<?instruction do="something"?>
+<data>
+    <one>1</one>
+    <self me="myslef"/>
     <!-- comment -->
-    <? PI attribute="pi" ?>
-    <text>hello world</text>
-    <tree>
-        <node name="node">
-            <leaf value="leaf"/>
-        </node>
-    </tree>
-</xml>
+    <?process?>
+    <two three="3">
+        <fortytwo>42</fortytwo>
+    2
+    </two>
+</data>
