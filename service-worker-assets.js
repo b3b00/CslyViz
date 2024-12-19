@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-ufqR6DYKj8h6ehbeBPFYUbwOApXLvPPwj\/oPZqs6L9A=",
+      "hash": "sha256-nK3\/EFGZebvcbJ75SNLkHh7U+kMEVbDlNiNlrHiX3go=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -117,27 +117,31 @@
       "url": "_framework\/BlazorDialog.wasm"
     },
     {
-      "hash": "sha256-Ek2cSmx+\/tmoio8gpCnQ8RcECBm3V4vzOT6zTx2RP6U=",
+      "hash": "sha256-iK4tFsXPh8DDzt7pfqQCO9URd1Sh4BeDFmwCfJmaH0A=",
       "url": "_framework\/csly-cli-api.wasm"
     },
     {
-      "hash": "sha256-PZuD8W6XQFsRlF6z\/QT0+cw71lQAmuIrXZ3ESZsKJVk=",
+      "hash": "sha256-DRxQeuGRsTQrY3\/07LH6tus1aTOwi2\/y39KpkVVpdUU=",
       "url": "_framework\/csly-cli-builder.wasm"
     },
     {
-      "hash": "sha256-93B5dtBeU3Zorvxd2fKN5HqZ4261mNNhkSbtqfljU2I=",
+      "hash": "sha256-Id4m2KU0tbj2IYUEdboC0qkyn0\/AiiViNCyuUHt\/Sm4=",
+      "url": "_framework\/csly-cli-decompiler.wasm"
+    },
+    {
+      "hash": "sha256-TkNQWmHsWjrDXC7X32TK2GY86PF5mXMsBBQzJwwpjBk=",
       "url": "_framework\/csly-cli-extractor.wasm"
     },
     {
-      "hash": "sha256-1ZzaOxrnBAHpOs\/\/kSEixU6E\/sTDuFEExGhRDVXG+r8=",
+      "hash": "sha256-ToPwVGKkj1\/aQU1CBVRF2CyLr\/SfbN67FDWoZ+NcsDo=",
       "url": "_framework\/csly-cli-model.wasm"
     },
     {
-      "hash": "sha256-wCx463n+PElg5+4E6yMBgYrZXbXZzLkrhRSWo2Qkbr4=",
+      "hash": "sha256-zYGSSpyr1LpbCIfrmvK2OGW0qH6bqfFcA41siaMK0uo=",
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-V6WlDZpzUbi2CYV7kzJa+X+6n5ltT7zYPfBGyDkiNgk=",
+      "hash": "sha256-j8rrPjnaRnenXGnMSnbnTTaipuSh0VjSh02iq3xKHVs=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -217,7 +221,7 @@
       "url": "_framework\/SharpCoreFileSystem.wasm"
     },
     {
-      "hash": "sha256-h2cgadt2qB6zFzvIgZ73FYyVc2dqfy\/Q501Qf5CRnFs=",
+      "hash": "sha256-R03qo9i\/SktiXqM2m6vLJhcjEa8ggHnHJq8Y30rqqRw=",
       "url": "_framework\/sly.wasm"
     },
     {
@@ -321,7 +325,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-SNVRYy6oa5dWhN3ABW789dN3QJ1Xan0HxMrn4GUaQpk=",
+      "hash": "sha256-uQ4o6MT6DV2l8+J32qAXLTmO43YZ6CEiA5s8QHxJZ8s=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -561,5 +565,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "0izixW0K"
+  "version": "nkhnsGmU"
 };
