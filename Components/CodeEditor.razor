@@ -10,9 +10,9 @@
 
 
 <div style="display:flex;flex-direction: row" >
-    <textarea id="@Id-lines" style="overflow: hidden; width: 95%; height: 1301px;" @bind="Lines"  >1</textarea>
+    @* <textarea id="@Id-lines" style="overflow: hidden; width: 95%; field-sizing: content" @bind="Lines"  >1</textarea> *@
     
-    <textarea id="@Id-code" style="overflow: hidden; width: 95%; height: 1301px;display: inline" @bind="Value"></textarea>
+    <textarea id="@Id-code" style="overflow: hidden; width: 100%; display: inline;field-sizing: content" @bind="Value"></textarea>
 </div>
 
 @code {
@@ -32,41 +32,41 @@
     [Parameter]
     public string Id { get; set; }
     
-    private string Lines { get; set; }
+    // private string Lines { get; set; }
     
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
     
-    private IList<string> GetLines(string value)
-    {
-        if (!string.IsNullOrEmpty(value))
-        {
-            var reader = new StringReader(value);
-            IList<string> lines = new List<string>();
-            string line = reader.ReadLine();
-            while (line != null)
-            {
-                lines.Add(line);
-                line = reader.ReadLine();
-            }
-
-            return lines;
-        }
-
-        return new List<string>();
-    } 
-    private void onEditorChange()
-    {
-        var lines = GetLines(Value);
-        var linesContent = new StringBuilder();
-        for (int i = 0; i < lines.Count; i++)
-        {
-            linesContent.AppendLine(i.ToString());
-        }
-
-        Lines = linesContent.ToString();
-    }
+    // private IList<string> GetLines(string value)
+    // {
+    //     if (!string.IsNullOrEmpty(value))
+    //     {
+    //         var reader = new StringReader(value);
+    //         IList<string> lines = new List<string>();
+    //         string line = reader.ReadLine();
+    //         while (line != null)
+    //         {
+    //             lines.Add(line);
+    //             line = reader.ReadLine();
+    //         }
+    //
+    //         return lines;
+    //     }
+    //
+    //     return new List<string>();
+    // } 
+    // private void onEditorChange()
+    // {
+    //     var lines = GetLines(Value);
+    //     var linesContent = new StringBuilder();
+    //     for (int i = 0; i < lines.Count; i++)
+    //     {
+    //         linesContent.AppendLine(i.ToString());
+    //     }
+    //
+    //     Lines = linesContent.ToString();
+    // }
     protected override async void OnInitialized()
     {        
     }
