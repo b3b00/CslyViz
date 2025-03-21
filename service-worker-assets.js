@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-LxXtjV4Yc3q+Tyj8kZncoQ+3\/zcn9CXAJsZbh92T9\/Y=",
+      "hash": "sha256-4S8Vcr+2J8xjyUY15lfBhNTs2VvxTYDx2Qs8m2RZ\/Zo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -117,27 +117,27 @@
       "url": "_framework\/BlazorDialog.wasm"
     },
     {
-      "hash": "sha256-lJfXJC4h8mm2K9UDtYOh5tjr39nUsyWTIVxsWAsTi8U=",
+      "hash": "sha256-GnwTZfdxCoBuxvFHWuuPe3omxl9E3flXebcUt9jVDIU=",
       "url": "_framework\/csly-cli-api.wasm"
     },
     {
-      "hash": "sha256-CkbJDFQRa7OnZ2Zsdjoy8qCcpkqc49MhE+E2DrpyAsE=",
+      "hash": "sha256-hbGN1NcFKPQu0pCaoQufKklmpl09okfkKwjYIx6j61I=",
       "url": "_framework\/csly-cli-builder.wasm"
     },
     {
-      "hash": "sha256-EEI37hXfZEfGTbocZcD9ipbV34UWohewmOTU2R2gfYI=",
+      "hash": "sha256-H52cebTn6X1bw6xoI1vMsA9T3v29y5G6aF6UMoTHvwY=",
       "url": "_framework\/csly-cli-decompiler.wasm"
     },
     {
-      "hash": "sha256-6xoZ5QNoUXB47gwKRt+G2S5mHjHbq7kP5KKJ2GvmtGY=",
+      "hash": "sha256-ksj2TV\/5aYFLG0Xh\/llXeTDHyDPv5WIjwZuwU5Bk8oQ=",
       "url": "_framework\/csly-cli-extractor.wasm"
     },
     {
-      "hash": "sha256-tBsmCDLtScUX44YN\/wpPX7yN8yTLxUGsZpXbkecMrFo=",
+      "hash": "sha256-bajKVCfMomb4ta7X2HwrUARf6NIz6fCku7lspIJngoc=",
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-NY2Ph0AFxlcS8cORr+BX2XFMMdmwgM8r8YVFN1w1NOw=",
+      "hash": "sha256-PuhhqZEzQpEAypZNYWR1XSJrzrIsnJGyWIH1NNJ8GM0=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -217,7 +217,7 @@
       "url": "_framework\/SharpCoreFileSystem.wasm"
     },
     {
-      "hash": "sha256-az\/Q7vCMtyWYCXusqFODef6UuaBqyG\/yPLRPb6zvjkM=",
+      "hash": "sha256-UcvSD2VbMFjqxn4ULDeWLZYT3\/P27MX\/PkgO4\/M\/DiM=",
       "url": "_framework\/sly.wasm"
     },
     {
@@ -417,6 +417,10 @@
       "url": "_framework\/System.Threading.Tasks.Parallel.wasm"
     },
     {
+      "hash": "sha256-3xqF4PQCmhf\/x\/cXYF2EGtsy0esSDKFyD6AwqkxRn3M=",
+      "url": "_framework\/System.Threading.Thread.wasm"
+    },
+    {
       "hash": "sha256-VKuYXPUfeNoCMYTcxuQqbNS6aO8uN8gtNnmCNuhI2zs=",
       "url": "_framework\/System.Threading.ThreadPool.wasm"
     },
@@ -561,5 +565,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "WVpMxto9"
+  "version": "gXsTmbJm"
 };
