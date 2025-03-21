@@ -20,7 +20,6 @@
         get => _graph;
         set
         {
-            Console.WriteLine($"updating graph => {value}");
             _graph = value;
             new Task(async () =>
             {
@@ -43,7 +42,6 @@
     {
         if (!string.IsNullOrEmpty(graph))
         {
-            Console.WriteLine($"rendering graph on {Id}");
             await JSRuntime.InvokeAsync<string>("vizRender", graph, Id);
             // await JSRuntime.InvokeAsync<string>("vizRenderOn", graph, divId);
         }

@@ -21,11 +21,12 @@
     <div id="graph">
         <div id="output">
             <div id="error">
+                <p style="color:black">@log</p>
                 @foreach (var message in messages)
                 {
                     <p style="color:black; background-color: lawngreen ">@message</p>
                 }
-    
+
                 @foreach (var error in errors)
                 {
                     <p style="color:black; background-color: darksalmon ">@error</p>
@@ -99,7 +100,18 @@
         StateHasChanged();
         Task.Run(() =>
         {
-            var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source);
+            var callback = (string message) =>
+            {
+                Thread.Sleep(100);
+                //messages.Add(message);
+                log = message;
+                Console.WriteLine(message);
+                StateHasChanged();
+                
+            };
+            
+            var dotresult = processor.GetDot(cslyContext.Grammar, cslyContext.Source, callback);
+            log = "";
             processing = false;
             StateHasChanged();
             if (dotresult.IsOK)
@@ -140,6 +152,7 @@
 
     private List<string> messages = new List<string>();
     private List<string> errors = new List<string>();
+    private string log = "";
     
     public async Task AppendError(string errorMessage)
     {
