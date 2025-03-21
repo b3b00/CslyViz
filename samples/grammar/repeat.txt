@@ -1,0 +1,7 @@
+genericLexer MinimalLexer;
+[AlphaId] ID ;
+[Sugar] COLON : "":"" ;
+
+parser RepeatParser;
+
+-> root : ID{2} COLON ID{0-5}  ;

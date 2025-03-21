@@ -93,6 +93,7 @@ public class CslyContext : ICslyContext
         { "simple template", "template.txt" },
         { "While language", "while.txt" },
         { "indented While language", "indented-while.txt" },
+        { "repeat", "repeat.txt" },
     };
 
     private string _dotGraph;
