@@ -1,0 +1,39 @@
+
+genericLexer mixedlexer;
+
+[Mode("default")]
+[AlphaId] ID_OUT;
+
+[Mode("default")]
+[KeyWord] A : "a";
+[Mode("default")]
+[KeyWord] B : "b";
+[Mode("default")]
+[KeyWord] C : "c";
+[Mode("inner")]
+[AlphaNumId] ID_IN;
+
+
+[Push("inner")]
+[Sugar] OPEN : ">>>";
+
+
+[Mode("inner")]
+[KeyWord] X : "x";
+[Mode("inner")]
+[KeyWord] Y : "y";
+[Mode("inner")]
+[KeyWord] Z : "z";
+
+[Mode("inner")]
+[Pop]
+[Sugar] CLOSE : "<<<"; 
+
+parser mixedparser;
+
+-> root : outer* OPEN inner* CLOSE outer; 
+
+outer : [A|B|C|ID_OUT];
+
+inner : [X|Y|Z|ID_IN];
+

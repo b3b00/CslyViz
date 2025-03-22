@@ -1,0 +1,7 @@
+a b c out 
+>>> 
+  # a1 should be accepted as an alphanum id 
+   x y z a1 in42
+<<< 
+# z should be an ID token and not a Z token
+z
