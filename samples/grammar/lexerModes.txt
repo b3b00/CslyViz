@@ -34,8 +34,8 @@ genericLexer mixedlexer;
 
 parser mixedparser;
 
--> root : outer* OPEN inner* CLOSE outer; 
-
+-> root : outer*  in outer; 
+in : OPEN inner* CLOSE;
 outer : [A|B|C|ID_OUT];
 
 inner : [X|Y|Z|ID_IN];
