@@ -47,6 +47,7 @@
     <EmbeddedResource Include="samples\grammar\while.txt" />
     <EmbeddedResource Include="samples\grammar\xml.txt" />
     <EmbeddedResource Include="samples\grammar\repeat.txt" />
+    <EmbeddedResource Include="samples\grammar\lexerModes.txt" />
     <EmbeddedResource Include="samples\source\expression.txt" />
     <EmbeddedResource Include="samples\source\indented-while.txt" />
     <EmbeddedResource Include="samples\source\json.txt" />
@@ -54,12 +55,14 @@
     <EmbeddedResource Include="samples\source\while.txt" />
     <EmbeddedResource Include="samples\source\xml.txt" />
     <EmbeddedResource Include="samples\source\repeat.txt" />
+    <EmbeddedResource Include="samples\source\lexerModes.txt" />
     <Content Remove="wwwroot\samples\grammar\indented-while.txt" />
     <Content Remove="wwwroot\samples\grammar\json.txt" />
     <Content Remove="wwwroot\samples\grammar\template.txt" />
     <Content Remove="wwwroot\samples\grammar\while.txt" />
     <Content Remove="wwwroot\samples\grammar\xml.txt" />
     <Content Remove="wwwroot\samples\grammar\repeat.txt" />
+    <Content Remove="wwwroot\samples\grammar\lexerModes.txt" />
     <Content Remove="wwwroot\samples\source\expression.txt" />
     <Content Remove="wwwroot\samples\source\indented-while.txt" />
     <Content Remove="wwwroot\samples\source\json.txt" />
@@ -67,6 +70,7 @@
     <Content Remove="wwwroot\samples\source\while.txt" />
     <Content Remove="wwwroot\samples\source\xml.txt" />
     <Content Remove="wwwroot\samples\source\repeat.txt" />
+    <Content Remove="wwwroot\samples\source\lexerModes.txt" />
   </ItemGroup>
 
   <ItemGroup>

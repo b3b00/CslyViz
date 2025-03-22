@@ -1,7 +1,8 @@
 a b c out 
->>> 
-  # a1 should be accepted as an alphanum id 
-   x y z a1 in42
+>>>   
+# z666 should be accepted as a keyword derived from alpha num id
+# a1 should be accepted as an alphanum id    
+x y z666 a1 in42
 <<< 
 # z should be an ID token and not a Z token
 z

@@ -1,6 +1,9 @@
 
 genericLexer mixedlexer;
 
+[Mode("default","inner")]
+[SingleLineComment] COMMENT : "#";
+
 [Mode("default")]
 [AlphaId] ID_OUT;
 
@@ -23,7 +26,7 @@ genericLexer mixedlexer;
 [Mode("inner")]
 [KeyWord] Y : "y";
 [Mode("inner")]
-[KeyWord] Z : "z";
+[KeyWord] Z : "z666";
 
 [Mode("inner")]
 [Pop]
@@ -36,4 +39,3 @@ parser mixedparser;
 outer : [A|B|C|ID_OUT];
 
 inner : [X|Y|Z|ID_IN];
-
