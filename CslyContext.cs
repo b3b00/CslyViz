@@ -95,6 +95,7 @@ public class CslyContext : ICslyContext
         { "indented While language", "indented-while.txt" },
         { "repeat", "repeat.txt" },
         { "lexer modes", "lexerModes.txt" },
+        { "csly-cli parse itself", "meta.txt" },
     };
 
     private string _dotGraph;
