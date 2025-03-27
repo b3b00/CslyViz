@@ -16,13 +16,14 @@
     <div>
         
         <h1>@cslyContext.SampleName</h1>
+        <h3>@cslyContext.SampleDescription</h3>
 
         <div style="display: block">
             <label for="preset">grammars : </label>
             <select class="form-control d-flex" @onchange="SelectSample" id="preset">
                 @foreach (var template in cslyContext.GetSamples())
                 {
-                    <option value=@template>@template</option>
+                    <option value=@template.name>@(!string.IsNullOrEmpty(template.name) ? $"{template.name} - {template.description}" : "")</option>
                 }
             </select>
         </div>

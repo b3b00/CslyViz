@@ -15,6 +15,17 @@ public class CslyContext : ICslyContext
             _sampleName = value;
         }
     }
+    
+    private string _description;
+    public string SampleDescription
+    {
+        get => _description;
+        set
+        {
+            _description = value;
+        }
+    }
+    
 
     private string _grammar = "";
 
@@ -24,6 +35,7 @@ public class CslyContext : ICslyContext
         set
         {
             _sampleName = "";
+            _description = "";
             _dotGraph = "";
             _grammar = value;
         }
@@ -55,13 +67,18 @@ public class CslyContext : ICslyContext
         {
             Grammar = "";
             Source = "";
+            _description = "";
             _dotGraph = "";
         }
         else
         {
+            var sample = Samples[sampleName];
+            
             Grammar = GetSampleGrammar(sampleName);
             Source = getSampleSource(sampleName);
+            _description = sample.description;
             _sampleName = sampleName;
+            
             _dotGraph = "";
         }
     }
@@ -84,26 +101,26 @@ public class CslyContext : ICslyContext
     
     private Dictionary<string, string> SamplesSources = new Dictionary<string, string>();
 
-    private Dictionary<string, string> Samples = new Dictionary<string, string>()
+    private Dictionary<string, (string file, string description)> Samples = new Dictionary<string, (string file, string description)>()
     {
-        { "", null },
-        { "Expressions", "expression.txt" },
-        { "XML", "xml.txt" },
-        { "JSON", "json.txt" },
-        { "simple template", "template.txt" },
-        { "While language", "while.txt" },
-        { "indented While language", "indented-while.txt" },
-        { "repeat", "repeat.txt" },
-        { "lexer modes", "lexerModes.txt" },
-        { "csly-cli parse itself", "meta.txt" },
+        { "", ("","") },
+        { "Expressions", ("expression.txt","demonstrates expression parsing") },
+        { "XML", ("xml.txt", "") },
+        { "JSON", ("json.txt","") },
+        { "simple template", ("template.txt","demonstrates lexer modes") },
+        { "While language", ("while.txt","") },
+        { "indented While language", ("indented-while.txt","demonstrates indentation awareness") },
+        { "repeat", ("repeat.txt","demonstrates EBNF repetitions {x} and {x-y}") },
+        { "lexer modes", ("lexerModes.txt","demonstrates lexer modes") },
+        { "csly-cli parse itself", ("meta.txt", "meta demonstration : csly-cli grammar parses itself") },
     };
 
     private string _dotGraph;
     private string _source;
 
-    public List<string> GetSamples()
+    public List<(string name, string description)> GetSamples()
     {
-        return Samples.Keys.ToList();
+        return Samples.Select(x =>(x.Key, x.Value.description)).ToList();
     }
 
     public string GetSampleGrammar(string sampleName)
@@ -111,10 +128,10 @@ public class CslyContext : ICslyContext
         string sampleGrammar = "";
         if (!SamplesGrammars.TryGetValue(sampleName, out sampleGrammar))
         {
-            if (Samples.TryGetValue(sampleName, out string path ))
+            if (Samples.TryGetValue(sampleName, out var d ))
             {
                 var fs = new EmbeddedResourceFileSystem(GetType().Assembly);
-                sampleGrammar = fs.ReadAllText($"/samples/grammar/{path}");
+                sampleGrammar = fs.ReadAllText($"/samples/grammar/{d.file}");
                 SamplesGrammars[sampleName] = sampleGrammar;
             }
         }
@@ -128,10 +145,10 @@ public class CslyContext : ICslyContext
         if (!SamplesSources.TryGetValue(sampleName, out sampleSource))
         {
             
-            if (Samples.TryGetValue(sampleName, out string path ))
+            if (Samples.TryGetValue(sampleName, out var d ))
             {
                 var fs = new EmbeddedResourceFileSystem(GetType().Assembly);
-                sampleSource = fs.ReadAllText($"/samples/source/{path}");
+                sampleSource = fs.ReadAllText($"/samples/source/{d.file}");
                 SamplesSources[sampleName] = sampleSource;
             }
         }

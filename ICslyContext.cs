@@ -3,7 +3,9 @@
 public interface ICslyContext 
 {
     
-    string SampleName { get; set; }
+    string SampleName { get;  }
+    
+    string SampleDescription { get;  }
     
     string Grammar { get; set; }
     
@@ -13,6 +15,6 @@ public interface ICslyContext
 
     void SetSample(string sampleName);
 
-    List<string> GetSamples();
+    List<(string name, string description)> GetSamples();
 
 }
