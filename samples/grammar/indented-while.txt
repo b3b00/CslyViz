@@ -42,7 +42,7 @@ genericLexer IndentedWhileTokenGeneric;
 [KeyWord] RETURN : "return";
 
 [Mode("default", "fstringExpression")]
-[AlphaNumDashId] IDENTIFIER;
+[CustomId] IDENTIFIER : "_A-Za-z" "---_-_0-9A-Za-z.";
 
 [Int] INT;
 

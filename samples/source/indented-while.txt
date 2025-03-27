@@ -9,7 +9,7 @@ while i < 11 do
     
 v1 := 48
 v2 := 152
-fstring := $"v1 :> {v1} < v2 :> {v2} < v3 :> {v1+v2} <  v4 :>{$"hello,".$" world"}< v5 :>{(? b -> $"true" | $"false")}< - end"
-print fstring
+_foo-bar.baz-qux9 := $"v1 :> {v1} < v2 :> {v2} < v3 :> {v1+v2} <  v4 :>{$"hello,".$" world"}< v5 :>{(? b -> $"true" | $"false")}< - end"
+print _foo-bar.baz-qux9
 
 return 100     
