@@ -30,6 +30,15 @@ public static  class TokenModelExtensions
             return $@"[String] {tokenModel.Name};";
         }
         
+        if (tokenModel.Type == GenericToken.Char)
+        {
+            if (tokenModel.Args != null && tokenModel.Args.Length == 2)
+            {
+                return $@"[Char] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ""{tokenModel.Args[1]}"" ;";
+            }
+            return $@"[Char] {tokenModel.Name};";
+        }
+        
         if (tokenModel.Type == GenericToken.Identifier && tokenModel.IdentifierType == IdentifierType.Custom)
         {
             if (tokenModel.Args != null && tokenModel.Args.Length == 2)
@@ -57,6 +66,21 @@ public static  class TokenModelExtensions
         if (tokenModel.Type == GenericToken.KeyWord && tokenModel.Args != null && tokenModel.Args.Length == 1)
         {
             return $@"[keyWord] {tokenModel.Name} : ""{tokenModel.Args[0]}"";";
+        }
+        
+        if (tokenModel.Type == GenericToken.Date && tokenModel.Args != null && tokenModel.Args.Length == 2)
+        {
+            return $@"[Date] {tokenModel.Name} : {tokenModel.Args[0]} '{tokenModel.Args[1]}';";
+        }
+        
+        if (tokenModel.Type == GenericToken.Comment && tokenModel.Args != null && tokenModel.Args.Length == 2)
+        {
+            return $@"[MultiLineComment] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ""{tokenModel.Args[1]}"";";
+        }
+        
+        if (tokenModel.Type == GenericToken.Comment && tokenModel.Args != null && tokenModel.Args.Length == 1)
+        {
+            return $@"[SingleLineComment] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ;";
         }
         
 

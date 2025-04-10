@@ -1,9 +1,12 @@
-﻿@using csly.cli.model.lexer
+﻿@using System.Xml
+@using csly.cli.model.lexer
 @using csly.cli.model.parser
 @using sly.lexer
 <h3>LexerAssistant</h3>
 
 @code {
+    private const string YYYYMMDD = "YYYYMMDD";
+    private const string DDMMYYYY = "DDMMYYYY";
 
     private string TokenName { get; set; } = "";
     
@@ -72,7 +75,51 @@
         var token = new TokenModel(new List<AttributeModel>(),GenericToken.String,TokenName,StringDelimiter,stringEscape);
         InsertToken(token);
         StateHasChanged();
-        // TODO
+    }
+    
+    private bool HideChar { get; set; } = true;
+
+    private string CharDelimiter { get; set; } = "\\\"";
+
+    private string CharEscape { get; set; } = "\\\\";
+     
+
+
+    private async Task Character()
+    {
+        Console.WriteLine($"string name:>{TokenName}<: delimiter:>{CharDelimiter}<: escape:>{CharEscape}<:");
+        HideString = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Char,TokenName,CharDelimiter,CharEscape);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+    private bool HideSingleComment { get; set; } = true;
+    
+    private bool HideMultiComment { get; set; } = true;
+
+    private string SingleCommentStart { get; set; } = "//";
+    
+    private string MultiCommentStart { get; set; } = "/*";
+    
+    private string MultiCommentEnd { get; set; } = "*/";
+    
+    private async Task SingleComment()
+    {
+        Console.WriteLine($"single comment name:>{TokenName}<: start:>{SingleCommentStart}<:");
+        HideSingleComment = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Comment,TokenName,SingleCommentStart);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+    private async Task MultiComment()
+    {
+        Console.WriteLine($"multi comment name:>{TokenName}<: start:>{MultiCommentStart}<: end:>{MultiCommentEnd}<:");
+        HideMultiComment = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Comment,TokenName,MultiCommentStart,MultiCommentEnd);
+        InsertToken(token);
+        StateHasChanged();
     }
 
     private bool HideDouble = true;
@@ -89,6 +136,16 @@
         // TODO
     }
 
+    private string DateFormat { get; set; } = "YYYYMMDD";
+    
+    private string DateSeparator { get; set; } = "-";
+    
+    private bool HideDate { get; set; } = true;
+    private async Task Date()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Date,TokenName,IdentifierType.Alpha,DateFormat, DateSeparator));
+    }
+    
     private bool HideKeyWord = true;
 
     private string KeyWordValue { get; set; } = "";
@@ -107,6 +164,9 @@
     {
         InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Alpha));
     }
+
+
+  
 
     private async Task ShowAlphaId() => ShowBasic("AlphaId", AlphaId);
     
@@ -198,8 +258,20 @@
         keyword
     </button>
     <button id="string" @onclick="() => { HideString = !HideString; }" class="btn btn-primary">
-    String
+        String
     </button>
+    <button id="date" @onclick="() => { HideDate = !HideDate; }" class="btn btn-primary">
+        Date
+    </button>
+
+    <button id="single" @onclick="() => { HideSingleComment = !HideSingleComment; }" class="btn btn-primary">
+        Single line comment
+    </button>
+
+    <button id="multi" @onclick="() => { HideMultiComment = !HideMultiComment; }" class="btn btn-primary">
+        Multi line comment
+    </button>
+    
 </div>
 
 
@@ -240,6 +312,31 @@
     </DialogFooter>
 </div>
 
+<div hidden="@HideDate">
+    <DialogHeader ShowClose="false">
+        <h4>Date</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="customName" class="input-label">name</label>
+        <input id="customName" @bind="@TokenName"/>
+        <br/>
+        <label for="format" class="input-label">format</label>
+
+        <select id="format" @bind="DateFormat">
+            <option value="YYYYMMDD">YYYYMMDD</option>
+            <option value="DDMMYYYY">DDMMYYYY</option>
+        </select>
+        <br/>
+        <label for="end" class="input-label">separator</label>
+        <input id="end" @bind="@DateSeparator"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Date">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideDate = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
 
 <div hidden="@HideString">
     <DialogHeader ShowClose="false">
@@ -259,6 +356,68 @@
     <DialogFooter>
         <button type="button" class="btn btn-primary" @onclick="@String">Ok</button>
         <button type="button" class="btn btn-secondary" @onclick="() => { HideString = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideMultiComment">
+    <DialogHeader ShowClose="false">
+        <h4>Multi line comment</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="multiName" class="input-label">name</label>
+        <input id="multiName" @bind="@TokenName"/>
+        <br/>
+        <label for="multistart" class="input-label">start</label>
+        <input id="multistart" @bind="@MultiCommentStart"/>
+        <br/>
+        <label for="multiend" class="input-label">end</label>
+        <input id="multiend" @bind="@MultiCommentEnd"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@MultiComment">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideMultiComment = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideSingleComment">
+    <DialogHeader ShowClose="false">
+        <h4>Single line comment</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="singleName" class="input-label">name</label>
+        <input id="singleName" @bind="@TokenName"/>
+        <br/>
+        <label for="singleDelimiter" class="input-label">start</label>
+        <input id="singleDelimiter" @bind="@SingleCommentStart"/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@SingleComment">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideSingleComment = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideChar">
+    <DialogHeader ShowClose="false">
+        <h4>String</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="charName" class="input-label">name</label>
+        <input id="charName" @bind="@TokenName"/>
+        <br/>
+        <label for="chardelimiter" class="input-label">delimiter</label>
+        <input id="chardelimiter" @bind="@CharDelimiter"/>
+        <br/>
+        <label for="escape" class="input-label">string escape char</label>
+        <input id="charescape" @bind="@CharEscape"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Character">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideChar = true; }">Cancel</button>
     </DialogFooter>
 </div>
 
