@@ -1,6 +1,4 @@
-﻿@using System.Text
-@using clsy.cli.builder.parser.cli.model
-@using csly.cli.model.lexer
+﻿@using csly.cli.model.lexer
 @using csly.cli.model.parser
 @using sly.lexer
 <h3>LexerAssistant</h3>
@@ -43,8 +41,8 @@
     private string StartPattern { get; set; } = "";
 
     private string EndPattern { get; set; } = "";
-
-
+    
+    
     
     
     
@@ -53,6 +51,25 @@
         Console.WriteLine($"customid name:>{TokenName}<: start:>{StartPattern}<: end:>{EndPattern}<:");
         HideCustomId = true;
         var token = new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Custom,StartPattern,EndPattern);
+        InsertToken(token);
+        StateHasChanged();
+        // TODO
+    }
+    
+    
+    private bool HideString { get; set; } = true;
+
+    private string StringDelimiter { get; set; } = "\\\"";
+
+    private string stringEscape { get; set; } = "\\\\";
+     
+
+
+    private async Task String()
+    {
+        Console.WriteLine($"string name:>{TokenName}<: delimiter:>{StringDelimiter}<: escape:>{stringEscape}<:");
+        HideString = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.String,TokenName,StringDelimiter,stringEscape);
         InsertToken(token);
         StateHasChanged();
         // TODO
@@ -117,6 +134,7 @@
     private async Task InsertToken(TokenModel token)
     {
         
+        
         if (token.Args != null && token.Args.Length > 0)
         {
             Console.WriteLine($"insert token with {token.Args.Length} args");
@@ -129,7 +147,7 @@
         {
             Console.WriteLine($"insert token :  no args");
         }
-        Console.WriteLine($"insert token >>{TokenToString(token)}<<");
+        Console.WriteLine($"insert token >>{token.ToCliSource()}<<");
         if (OnTokenAdded.HasDelegate)
         {
             await OnTokenAdded.InvokeAsync("todo");
@@ -179,6 +197,9 @@
     <button id="keyword" @onclick="() => { HideKeyWord = !HideKeyWord; }" class="btn btn-primary">
         keyword
     </button>
+    <button id="string" @onclick="() => { HideString = !HideString; }" class="btn btn-primary">
+    String
+    </button>
 </div>
 
 
@@ -216,6 +237,28 @@
     <DialogFooter>
         <button type="button" class="btn btn-primary" @onclick="@CustomId">Ok</button>
         <button type="button" class="btn btn-secondary" @onclick="() => { HideCustomId = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideString">
+    <DialogHeader ShowClose="false">
+        <h4>String</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="stringName" class="input-label">name</label>
+        <input id="stringName" @bind="@TokenName"/>
+        <br/>
+        <label for="delimiter" class="input-label">delimiter</label>
+        <input id="delimiter" @bind="@StringDelimiter"/>
+        <br/>
+        <label for="escape" class="input-label">string escape char</label>
+        <input id="escape" @bind="@stringEscape"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@String">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideString = true; }">Cancel</button>
     </DialogFooter>
 </div>
 
