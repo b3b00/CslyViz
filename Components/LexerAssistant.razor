@@ -1,56 +1,259 @@
-﻿@using clsy.cli.builder.parser.cli.model
+﻿@using System.Text
+@using clsy.cli.builder.parser.cli.model
 @using csly.cli.model.lexer
 @using csly.cli.model.parser
+@using sly.lexer
 <h3>LexerAssistant</h3>
 
 @code {
+
+    private string TokenName { get; set; } = "";
     
-    [Parameter]
-    public EventCallback<string>  OnTokenAdded { get; set; }
+    private bool HideBasic { get; set; } = true;
+    
+    private Func<Task> BasicCallback { get; set; } = null;
+    
+    private string TokenType { get; set; } = "";
+    
+    
+    private async Task ShowBasic(string tokenType, Func<Task> callback)
+    {
+        HideBasic = !HideBasic;
+        TokenType = tokenType;
+        BasicCallback = callback;
+        TokenName = "";
+        StateHasChanged();
+    }
+    
+    private async Task Basic()
+    {
+        Console.WriteLine($"basic :>{TokenName}<:");
+        HideBasic = true;
+        StateHasChanged();
+        if (BasicCallback != null)
+        {
+            await BasicCallback();
+        }
+    }
+    
+    [Parameter] public EventCallback<string> OnTokenAdded { get; set; }
+
+    private bool HideCustomId { get; set; } = true;
+
+    private string StartPattern { get; set; } = "";
+
+    private string EndPattern { get; set; } = "";
+
+
+    
+    
+    
+    private async Task CustomId()
+    {
+        Console.WriteLine($"customid name:>{TokenName}<: start:>{StartPattern}<: end:>{EndPattern}<:");
+        HideCustomId = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Custom,StartPattern,EndPattern);
+        InsertToken(token);
+        StateHasChanged();
+        // TODO
+    }
+
+    private bool HideDouble = true;
+
+    private string DecimalSeparator { get; set; } = ".";
+
+    private async Task Double()
+    {
+        Console.WriteLine($"double name:>{TokenName}<: separator:>{DecimalSeparator}<:");
+        HideDouble = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Double,TokenName,DecimalSeparator);
+        InsertToken(token);
+        StateHasChanged();
+        // TODO
+    }
+
+    private bool HideKeyWord = true;
+
+    private string KeyWordValue { get; set; } = "";
+
+    private async Task KeyWord()
+    {
+        Console.WriteLine($"keyword name:>{TokenName}<: value:>{KeyWordValue}<:");
+        HideKeyWord = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.KeyWord,TokenName,KeyWordValue);
+        InsertToken(token);
+        StateHasChanged();
+        // TODO
+    }
+
     private async Task AlphaId()
     {
-        
-        return;
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Alpha));
     }
+
+    private async Task ShowAlphaId() => ShowBasic("AlphaId", AlphaId);
     
     private async Task AlphaNumId()
     {
-        return;
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumeric));
     }
     
+    private async Task ShowAlphaNumId() => ShowBasic("AlphaNumId", AlphaNumId);
+
     private async Task AlphaNumDashId()
     {
-        return;
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumericDash));
     }
 
-    private async Task CustomId()
+    private async Task ShowAlphaNumDashId() => ShowBasic("AlphaNumDashId", AlphaNumDashId);
+
+    private async Task Int()
     {
-        return;
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Int,TokenName));
     }
+
+    private async Task ShowInt() => ShowBasic("Int", Int);
 
     private async Task InsertToken(TokenModel token)
     {
+        
+        if (token.Args != null && token.Args.Length > 0)
+        {
+            Console.WriteLine($"insert token with {token.Args.Length} args");
+            for(int i = 0; i < token.Args.Length; i++)
+            {
+                Console.WriteLine($"insert token arg #{i} : {token.Args[i]}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"insert token :  no args");
+        }
+        Console.WriteLine($"insert token >>{TokenToString(token)}<<");
         if (OnTokenAdded.HasDelegate)
         {
             await OnTokenAdded.InvokeAsync("todo");
         }
     }
 
+
+    private string TokenToString(TokenModel token)
+    {
+        var args = token.Args != null && token.Args.Length > 0
+            ? string.Join(" ", token.Args)
+            : "";
+        return $"[{token.Type}-{token.IdentifierType} {token.Name} : {args}]";
+    }
+
+
+    protected override async void OnInitialized()
+    {
+        Console.WriteLine("assistant iniitialized");
+    }
 }
-}
+
+
+
+
 
 
 <div style="flex-direction: row; display: flex" id="lexerAssistance">
-    <button id="alphaid" @onclick="AlphaId" class="btn btn-primary bi-trash">
+    <button id="alphaid" @onclick="ShowAlphaId" class="btn btn-primary">
         AlphaId
     </button>
-    <button id="alphanumid" @onclick="AlphaNumId" class="btn btn-primary bi-trash">
+    <button id="alphanumid" @onclick="ShowAlphaNumId" class="btn btn-primary">
         AlphaNumId
     </button>
-    <button id="lphanumdashid" @onclick="AlphaNumDashId" class="btn btn-primary bi-trash">
+    <button id="lphanumdashid" @onclick="ShowAlphaNumDashId" class="btn btn-primary">
         AlphaNumDashId
     </button>
-    <button id="customid" @onclick="CustomId" class="btn btn-primary bi-trash">
-        AlphaNumDashId
+    <button id="customid" @onclick="() => { HideCustomId = !HideCustomId;}" class="btn btn-primary">
+        CustomId
     </button>
+    <button id="int" @onclick="ShowInt" class="btn btn-primary">
+        Int
+    </button>
+    <button id="double" @onclick="() => { HideDouble = !HideDouble; }" class="btn btn-primary">
+        Double
+    </button>
+    <button id="keyword" @onclick="() => { HideKeyWord = !HideKeyWord; }" class="btn btn-primary">
+        keyword
+    </button>
+</div>
+
+
+
+<div hidden="@HideBasic">
+    <DialogHeader ShowClose="false">
+        <h4>@TokenType</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="basicName" class="input-label">name</label>
+        <input id="basicName" @bind="TokenName"/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Basic">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideBasic = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideCustomId">
+    <DialogHeader ShowClose="false">
+        <h4>Custom Id</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="customName" class="input-label">name</label>
+        <input id="customName" @bind="@TokenName"/>
+        <br/>
+        <label for="start" class="input-label">start pattern</label>
+        <input id="start" @bind="@StartPattern"/>
+        <br/>
+        <label for="end" class="input-label">end pattern</label>
+        <input id="end" @bind="@EndPattern"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@CustomId">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideCustomId = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<div hidden="@HideDouble">
+    <DialogHeader ShowClose="false">
+        <h4>double</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="doubleName" class="input-label">name</label>
+        <input id="doubleName" @bind="TokenName"/>
+        <br/>
+        <label for="separator" class="input-label">decimal separator</label>
+        <input id="separator" @bind="DecimalSeparator"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Double">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideDouble = true; }">Cancel</button>
+    </DialogFooter>
+
+</div>
+
+<div hidden="@HideKeyWord">
+    <DialogHeader ShowClose="false">
+        <h4>KeyWord</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="kwName" class="input-label">name</label>
+        <input id="kwName" @bind="TokenName"/>
+        <br/>
+        <label for="separator" class="input-label">keyword value</label>
+        <input id="separator" @bind="KeyWordValue"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@KeyWord">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideKeyWord = true; }">Cancel</button>
+    </DialogFooter>
+
 </div>
