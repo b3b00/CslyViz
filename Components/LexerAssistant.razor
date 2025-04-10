@@ -1,0 +1,301 @@
+﻿@using System.Xml
+@using csly.cli.model.lexer
+@using csly.cli.model.parser
+@using sly.lexer
+<h3>LexerAssistant</h3>
+
+@code {
+    private const string YYYYMMDD = "YYYYMMDD";
+    private const string DDMMYYYY = "DDMMYYYY";
+
+    private string TokenName { get; set; } = "";
+    
+    private bool HideBasic { get; set; } = true;
+    
+    private Func<Task> BasicCallback { get; set; } = null;
+    
+    private string TokenType { get; set; } = "";
+    
+    private async Task ShowBasic(string tokenType, Func<Task> callback)
+    {
+        HideBasic = !HideBasic;
+        TokenType = tokenType;
+        BasicCallback = callback;
+        TokenName = "";
+        StateHasChanged();
+    }
+    
+    private async Task Basic()
+    {
+        HideBasic = true;
+        StateHasChanged();
+        if (BasicCallback != null)
+        {
+            await BasicCallback();
+        }
+    }
+    
+    [Parameter] public EventCallback<string> OnTokenAdded { get; set; }
+
+    private bool HideCustomId { get; set; } = true;
+    
+    private async Task CustomId((string name, string start, string end) args)
+    {
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,args.name,IdentifierType.Custom,args.start,args.end);
+        await InsertToken(token);
+        HideCustomId = true;
+        StateHasChanged();
+    }
+    
+
+    
+    private bool HideString { get; set; } = true;
+    private async Task String((string name, string delimiter, string escape) args)
+    {
+        
+        HideString = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.String,args.name,args.delimiter,args.escape);
+        InsertToken(token);
+        StateHasChanged();
+    }
+
+    
+    
+    private bool HideChar { get; set; } = true;
+    private async Task Character((string name, string delimiter, string escape) args)
+    {
+        
+        HideChar = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Char,args.name,args.delimiter,args.escape);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+    private bool HideSingleComment { get; set; } = true;
+    private async Task SingleComment((string name, string start) args)
+    {
+        
+        HideSingleComment = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Comment,args.name,args.start);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+    private bool HideMultiComment { get; set; } = true;
+    
+    private async Task MultiComment((string name, string start, string end) args)
+    {
+        HideMultiComment = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Comment,args.name,args.start, args.end);
+        InsertToken(token);
+        StateHasChanged();
+    }
+
+    private bool HideDouble = true;
+    private async Task Double((string name, string separator) args)
+    {
+        HideDouble = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Double,args.name,args.separator);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+
+    private string DateFormat { get; set; } = "YYYYMMDD";
+    
+    private string DateSeparator { get; set; } = "-";
+    
+    private bool HideDate { get; set; } = true;
+    private async Task Date()
+    {
+        HideDate = true;
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Date,TokenName,IdentifierType.Alpha,DateFormat, DateSeparator));
+    }
+
+    
+    private bool HideKeyWord = true;
+    private async Task KeyWord((string name, string value) args)
+    {
+        HideKeyWord = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.KeyWord,args.name,args.value);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+
+    private async Task ShowAlphaId() => ShowBasic("AlphaId", AlphaId);
+    private async Task AlphaId()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Alpha));
+    }
+
+    
+    private bool HideSugar = true;
+    private async Task Sugar((string name, string pattern) args)
+    {
+        HideSugar = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.SugarToken,args.name,args.pattern);
+        InsertToken(token);
+        StateHasChanged();
+    }
+    
+    
+    
+    private async Task ShowAlphaNumId() => ShowBasic("AlphaNumId", AlphaNumId);
+    private async Task AlphaNumId()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumeric));
+    }
+    
+    
+    private async Task ShowAlphaNumDashId() => ShowBasic("AlphaNumDashId", AlphaNumDashId);
+    private async Task AlphaNumDashId()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumericDash));
+    }
+
+    private async Task ShowInt() => ShowBasic("Int", Int);
+    private async Task Int()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Int,TokenName));
+    }
+    
+    private async Task ShowExtension() => ShowBasic("Extension", Extension);
+    private async Task Extension()
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Extension,TokenName));
+    }
+
+
+
+    private async Task InsertToken(TokenModel token)
+    {        
+        Console.WriteLine($"insert token >>{token.ToCliSource()}<<");
+        if (OnTokenAdded.HasDelegate)
+        {
+            await OnTokenAdded.InvokeAsync(token.ToCliSource());
+        }
+    }
+
+    protected override async void OnInitialized()
+    {
+        Console.WriteLine("assistant iniitialized");
+    }
+}
+
+
+
+
+
+
+<div style="flex-direction: row; display: flex" id="lexerAssistance">
+    <button id="alphaid" @onclick="ShowAlphaId" class="btn btn-primary">
+        AlphaId
+    </button>
+    <button id="alphanumid" @onclick="ShowAlphaNumId" class="btn btn-primary">
+        AlphaNumId
+    </button>
+    <button id="alphanumdashid" @onclick="ShowAlphaNumDashId" class="btn btn-primary">
+        AlphaNumDashId
+    </button>
+    <button id="customid" @onclick="() => { HideCustomId = !HideCustomId;}" class="btn btn-primary">
+        CustomId
+    </button>
+    <button id="int" @onclick="ShowInt" class="btn btn-primary">
+        Int
+    </button>
+    <button id="double" @onclick="() => { HideDouble = !HideDouble; }" class="btn btn-primary">
+        Double
+    </button>
+    <button id="keyword" @onclick="() => { HideKeyWord = !HideKeyWord; }" class="btn btn-primary">
+        keyword
+    </button>
+    <button id="string" @onclick="() => { HideString = !HideString; }" class="btn btn-primary">
+        String
+    </button>
+
+    <button id="char" @onclick="() => { HideChar = !HideChar; }" class="btn btn-primary">
+        Character
+    </button>
+
+    <button id="sugar" @onclick="() => { HideSugar = !HideSugar; }" class="btn btn-primary">
+        Sugar
+    </button>
+    <button id="date" @onclick="() => { HideDate = !HideDate; }" class="btn btn-primary">
+        Date
+    </button>
+    <button id="ext" @onclick="ShowExtension" class="btn btn-primary">
+        Extension
+    </button>
+
+    <button id="single" @onclick="() => { HideSingleComment = !HideSingleComment; }" class="btn btn-primary">
+        Single line comment
+    </button>
+
+    <button id="multi" @onclick="() => { HideMultiComment = !HideMultiComment; }" class="btn btn-primary">
+        Multi line comment
+    </button>
+    
+</div>
+
+
+
+<div hidden="@HideBasic">
+    <DialogHeader ShowClose="false">
+        <h4>@TokenType</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="basicName" class="input-label">name</label>
+        <input id="basicName" @bind="TokenName"/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Basic">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideBasic = true; }">Cancel</button>
+    </DialogFooter>
+</div>
+
+
+<TwoParameterToken Label="Custom Id" p1Label="start pattern" p2Label="end pattern" Hide="HideCustomId" OnTokenAdded="CustomId"></TwoParameterToken>
+
+
+
+<TwoParameterToken Label="String" p1Label="delimiter" p2Label="escape char" Hide="HideString" OnTokenAdded="String"></TwoParameterToken>
+
+<TwoParameterToken Label="Multi line comment" p1Label="start" p2Label="end" p1Value="/*" p2Value="*/" Hide="HideMultiComment" OnTokenAdded="MultiComment"></TwoParameterToken>
+
+
+<OneParameterToken Label="Single Line comment" p1Label="start" p1Value="//" Hide="HideSingleComment" OnTokenAdded="SingleComment"></OneParameterToken>
+
+
+<TwoParameterToken Label="Character" p1Label="delimiter" p2Label="escape char" Hide="HideChar" OnTokenAdded="Character"></TwoParameterToken>
+
+<OneParameterToken Label="Double" p1Label="decimal separator" p1Value="." Hide="HideDouble" OnTokenAdded="Double"></OneParameterToken>
+
+<OneParameterToken Label="Keyword" p1Label="value" Hide="HideKeyWord" OnTokenAdded="KeyWord"></OneParameterToken>
+
+<OneParameterToken Label="Sugar" Hide="HideSugar" p1Label="pattern" OnTokenAdded="Sugar"></OneParameterToken>
+
+<div hidden="@HideDate">
+    <DialogHeader ShowClose="false">
+        <h4>Date</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="customName" class="input-label">name</label>
+        <input id="customName" @bind="@TokenName"/>
+        <br/>
+        <label for="format" class="input-label">format</label>
+
+        <select id="format" @bind="DateFormat">
+            <option value="YYYYMMDD">YYYYMMDD</option>
+            <option value="DDMMYYYY">DDMMYYYY</option>
+        </select>
+        <br/>
+        <label for="end" class="input-label">separator</label>
+        <input id="end" @bind="@DateSeparator"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Date">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideDate = true; }">Cancel</button>
+    </DialogFooter>
+</div>

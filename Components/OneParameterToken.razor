@@ -1,0 +1,47 @@
+﻿
+@code {
+    [Parameter]
+    public string Label { get; set; } = "";
+
+    public string Name { get; set; } = "";
+
+    [Parameter]
+    public string p1Label { get; set; } = "";
+    
+    [Parameter]
+    
+    public string p1Value { get; set; } = "";
+    
+    
+    
+    [Parameter] public EventCallback<(string name, string p1)> OnTokenAdded { get; set; }
+    
+    private void Validate()
+    {
+        Hide = true;
+        OnTokenAdded.InvokeAsync((Name, p1Value));
+        StateHasChanged();
+    }
+    
+    [Parameter]
+    public bool Hide {get; set; } = true;
+    
+}
+
+<div hidden="@Hide">
+    <DialogHeader ShowClose="false">
+        <h4>@Label</h4>
+    </DialogHeader>
+    <DialogBody>
+        <label for="customName" class="input-label">name</label>
+        <input id="customName" @bind="@Name"/>
+        <br/>
+        <label for="start" class="input-label">@p1Label</label>
+        <input id="start" @bind="@p1Value"/>
+        <br/>
+    </DialogBody>
+    <DialogFooter>
+        <button type="button" class="btn btn-primary" @onclick="@Validate">Ok</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { Hide = true; }">Cancel</button>
+    </DialogFooter>
+</div>
