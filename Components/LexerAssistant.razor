@@ -1,0 +1,56 @@
+﻿@using clsy.cli.builder.parser.cli.model
+@using csly.cli.model.lexer
+@using csly.cli.model.parser
+<h3>LexerAssistant</h3>
+
+@code {
+    
+    [Parameter]
+    public EventCallback<string>  OnTokenAdded { get; set; }
+    private async Task AlphaId()
+    {
+        
+        return;
+    }
+    
+    private async Task AlphaNumId()
+    {
+        return;
+    }
+    
+    private async Task AlphaNumDashId()
+    {
+        return;
+    }
+
+    private async Task CustomId()
+    {
+        return;
+    }
+
+    private async Task InsertToken(TokenModel token)
+    {
+        if (OnTokenAdded.HasDelegate)
+        {
+            await OnTokenAdded.InvokeAsync("todo");
+        }
+    }
+
+}
+}
+
+
+<div style="flex-direction: row; display: flex" id="lexerAssistance">
+    <button id="alphaid" @onclick="AlphaId" class="btn btn-primary bi-trash">
+        AlphaId
+    </button>
+    <button id="alphanumid" @onclick="AlphaNumId" class="btn btn-primary bi-trash">
+        AlphaNumId
+    </button>
+    <button id="lphanumdashid" @onclick="AlphaNumDashId" class="btn btn-primary bi-trash">
+        AlphaNumDashId
+    </button>
+    <button id="customid" @onclick="CustomId" class="btn btn-primary bi-trash">
+        AlphaNumDashId
+    </button>
+</div>

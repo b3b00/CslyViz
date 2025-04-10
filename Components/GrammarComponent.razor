@@ -119,8 +119,9 @@
 
         </div>
 
-        <div class="input"> <!--style="display: flex; flex-direction: row">-->
-
+        <div class="input" style="display: flex;flex-direction: column">
+            <LexerAssistant @OnTokenAdded="@InsertToken"></LexerAssistant> <!--style="display: flex; flex-direction: row">-->
+            @* TODO *@
             <div style="flex-direction: row; display: flex">
                 <textarea cols="4" @bind="Lines"></textarea>
                 <textarea style="overflow: hidden; width: 100%; height: 1301px;" i d="inputBox" maxlength="2000" spellcheck="false" @bind="Grammar" @onkeyup="() => SetLines(Grammar)" />
@@ -409,4 +410,10 @@
             await new StreamReader(e.File.OpenReadStream()).ReadToEndAsync();
         lexerSource = content;
     }
+
+    private async Task InsertToken(string token)
+    {
+        // TODO
+    }
+    
 }
