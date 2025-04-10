@@ -82,7 +82,22 @@ public static  class TokenModelExtensions
         {
             return $@"[SingleLineComment] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ;";
         }
+        if (tokenModel.Type == GenericToken.SugarToken && tokenModel.Args != null && tokenModel.Args.Length == 1)
+        {
+            return $@"[Sugar] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ;";
+        }
+
+        if (tokenModel.Type == GenericToken.Extension)
+        {
+            return $@"[Extension] {tokenModel.Name}
+>>>
+<<<";
+        }
         
+        if (tokenModel.Type == GenericToken.Hexa && tokenModel.Args != null && tokenModel.Args.Length == 1)
+        {
+            return $@"[Hexa] {tokenModel.Name} : ""{tokenModel.Args[0]}"" ;";
+        }
 
         return "to come";
     }
