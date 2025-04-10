@@ -43,6 +43,7 @@
     {
         var token = new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,args.name,IdentifierType.Custom,args.start,args.end);
         await InsertToken(token);
+        HideCustomId = true;
         StateHasChanged();
     }
     
@@ -64,7 +65,7 @@
     private async Task Character((string name, string delimiter, string escape) args)
     {
         
-        HideString = true;
+        HideChar = true;
         var token = new TokenModel(new List<AttributeModel>(),GenericToken.Char,args.name,args.delimiter,args.escape);
         InsertToken(token);
         StateHasChanged();
@@ -137,6 +138,8 @@
         InsertToken(token);
         StateHasChanged();
     }
+    
+    
     
     private async Task ShowAlphaNumId() => ShowBasic("AlphaNumId", AlphaNumId);
     private async Task AlphaNumId()
@@ -258,15 +261,15 @@
 
 <TwoParameterToken Label="String" p1Label="delimiter" p2Label="escape char" Hide="HideString" OnTokenAdded="String"></TwoParameterToken>
 
-<TwoParameterToken Label="Multi line comment" p1Label="start" p2Label="end" Hide="HideMultiComment" OnTokenAdded="MultiComment"></TwoParameterToken>
+<TwoParameterToken Label="Multi line comment" p1Label="start" p2Label="end" p1Value="/*" p2Value="*/" Hide="HideMultiComment" OnTokenAdded="MultiComment"></TwoParameterToken>
 
 
-<OneParameterToken Label="Single Line comment" p1Label="start" Hide="HideSingleComment" OnTokenAdded="SingleComment"></OneParameterToken>
+<OneParameterToken Label="Single Line comment" p1Label="start" p1Value="//" Hide="HideSingleComment" OnTokenAdded="SingleComment"></OneParameterToken>
 
 
 <TwoParameterToken Label="Character" p1Label="delimiter" p2Label="escape char" Hide="HideChar" OnTokenAdded="Character"></TwoParameterToken>
 
-<OneParameterToken Label="Double" p1Label="decimal separator" Hide="HideDouble" OnTokenAdded="Double"></OneParameterToken>
+<OneParameterToken Label="Double" p1Label="decimal separator" p1Value="." Hide="HideDouble" OnTokenAdded="Double"></OneParameterToken>
 
 <OneParameterToken Label="Keyword" p1Label="value" Hide="HideKeyWord" OnTokenAdded="KeyWord"></OneParameterToken>
 

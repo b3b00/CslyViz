@@ -9,9 +9,11 @@
     
     [Parameter]
     public string p2Label { get; set; } = "";
-    
+
+    [Parameter]
     public string p1Value { get; set; } = "";
     
+    [Parameter]
     public string p2Value { get; set; } = "";
     
     
@@ -21,6 +23,7 @@
     {
         Hide = true;
         OnTokenAdded.InvokeAsync((Name, p1Value, p2Value));
+        StateHasChanged(); 
     }
     
     [Parameter]
