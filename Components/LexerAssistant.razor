@@ -143,6 +143,7 @@
     private bool HideDate { get; set; } = true;
     private async Task Date()
     {
+        HideDate = true;
         InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Date,TokenName,IdentifierType.Alpha,DateFormat, DateSeparator));
     }
     
@@ -192,25 +193,11 @@
     private async Task ShowInt() => ShowBasic("Int", Int);
 
     private async Task InsertToken(TokenModel token)
-    {
-        
-        
-        if (token.Args != null && token.Args.Length > 0)
-        {
-            Console.WriteLine($"insert token with {token.Args.Length} args");
-            for(int i = 0; i < token.Args.Length; i++)
-            {
-                Console.WriteLine($"insert token arg #{i} : {token.Args[i]}");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"insert token :  no args");
-        }
+    {        
         Console.WriteLine($"insert token >>{token.ToCliSource()}<<");
         if (OnTokenAdded.HasDelegate)
         {
-            await OnTokenAdded.InvokeAsync("todo");
+            await OnTokenAdded.InvokeAsync(token.ToCliSource());
         }
     }
 
