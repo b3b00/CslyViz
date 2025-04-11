@@ -16,8 +16,13 @@
     
     private string TokenType { get; set; } = "";
     
+    private Dictionary<string, (Action<bool> setter, Func<bool> getter)> TokenActions { get; set; } 
+    
+    
+    
     private async Task ShowBasic(string tokenType, Func<Task> callback)
     {
+        Console.WriteLine($"toggling token >{tokenType}<");
         HideBasic = !HideBasic;
         TokenType = tokenType;
         BasicCallback = callback;
@@ -122,14 +127,6 @@
         StateHasChanged();
     }
     
-
-    private async Task ShowAlphaId() => ShowBasic("AlphaId", AlphaId);
-    private async Task AlphaId()
-    {
-        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.Alpha));
-    }
-
-    
     private bool HideSugar = true;
     private async Task Sugar((string name, string pattern) args)
     {
@@ -139,141 +136,144 @@
         StateHasChanged();
     }
     
-    
-    
-    private async Task ShowAlphaNumId() => ShowBasic("AlphaNumId", AlphaNumId);
-    private async Task AlphaNumId()
+    private bool HideHexa = true;
+    private async Task Hexa((string name, string pattern) args)
     {
-        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumeric));
+        HideHexa = true;
+        var token = new TokenModel(new List<AttributeModel>(),GenericToken.Hexa,args.name,args.pattern);
+        InsertToken(token);
+        StateHasChanged();
     }
     
-    
-    private async Task ShowAlphaNumDashId() => ShowBasic("AlphaNumDashId", AlphaNumDashId);
-    private async Task AlphaNumDashId()
+    private bool HideAlphaId { get; set; } = true;
+    private async Task AlphaId(string name)
     {
-        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,TokenName,IdentifierType.AlphaNumericDash));
-    }
-
-    private async Task ShowInt() => ShowBasic("Int", Int);
-    private async Task Int()
-    {
-        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Int,TokenName));
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,name,IdentifierType.Alpha));
     }
     
-    private async Task ShowExtension() => ShowBasic("Extension", Extension);
-    private async Task Extension()
+    private bool HideAlphaNumId { get; set; } = true;
+    private async Task AlphaNumId(string name)
     {
-        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Extension,TokenName));
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,name,IdentifierType.AlphaNumeric));
     }
-
-
-
+    
+    private bool HideAlphaNumDashId { get; set; } = true;
+    private async Task AlphaNumDashId(string name)
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Identifier,name,IdentifierType.AlphaNumericDash));
+    }
+    
+    private bool HideInt { get; set; } = true;
+    private async Task Int(string name)
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Int,name));
+    }
+    
+    private bool HideExtension { get; set; } = true;
+    private async Task Extension(string name)
+    {
+        InsertToken(new TokenModel(new List<AttributeModel>(),GenericToken.Extension,name));
+    }
     private async Task InsertToken(TokenModel token)
     {        
         Console.WriteLine($"insert token >>{token.ToCliSource()}<<");
         if (OnTokenAdded.HasDelegate)
         {
+            TokenType = "";
             await OnTokenAdded.InvokeAsync(token.ToCliSource());
         }
     }
 
+    private async Task CancelSelection()
+    {
+        TokenActions[TokenSelection].setter(true);
+        TokenSelection = " ";
+        
+    }
+
     protected override async void OnInitialized()
     {
-        Console.WriteLine("assistant iniitialized");
+        TokenActions= new Dictionary<string,( Action<bool> setter, Func<bool> getter)>()
+        {
+            {"AlphaId", ((b) => _ = HideAlphaId = b, () => HideAlphaId)},
+            {"AlphaNumId", ((b) => _ =HideAlphaNumId = b, () => HideAlphaNumId)},
+            {"AlphaNumDashId", ((b) => _ = HideAlphaNumDashId = b, () => HideAlphaNumDashId)},
+            {"Int", ((b) => _ = HideInt = b, () => HideInt)},
+            {"Extension", ((b) => _ = HideExtension = b, ()=> HideExtension)},
+            {"CustomId", ((b) => HideCustomId = b, () => HideCustomId)},
+            {"String",((b) => HideString = b, () => HideString)},
+            {"Char", ((b) => HideChar = b, () => HideChar)},
+            {"SingleComment", ((b) => HideSingleComment = b, () => HideSingleComment)},
+            {"MultiComment", ((b) => HideMultiComment = b, () => HideMultiComment)},
+            {"Double", ((b) => HideDouble = b, () => HideDouble)},
+            {"Date", ((b) => HideDate = b, () => HideDate)},
+            {"Keyword", ((b) => HideKeyWord = b, () => HideKeyWord)},
+            {"Sugar", ((b) => HideSugar = b, () => HideSugar)},
+            {"Hexa", ((b) => HideHexa = b, () => HideHexa)},
+        };
+    }
+
+    
+    private string TokenSelection { get; set; } = " ";
+    private void OnTokenSelectionChange()
+    {
+        if (!string.IsNullOrWhiteSpace(TokenSelection))
+        {
+            foreach (var tokenAction in TokenActions.Where(x => x.Key != TokenSelection && !string.IsNullOrWhiteSpace((x.Key))))
+            {
+                tokenAction.Value.setter(true);
+            }
+            TokenActions[TokenSelection].setter(false);
+        }
+        else
+        {
+            foreach (var tokenAction in TokenActions.Where(x =>  !string.IsNullOrWhiteSpace((x.Key))))
+            {
+                tokenAction.Value.setter(true);
+            }
+        }
     }
 }
 
-
-
-
-
-
 <div style="flex-direction: row; display: flex" id="lexerAssistance">
-    <button id="alphaid" @onclick="ShowAlphaId" class="btn btn-primary">
-        AlphaId
-    </button>
-    <button id="alphanumid" @onclick="ShowAlphaNumId" class="btn btn-primary">
-        AlphaNumId
-    </button>
-    <button id="alphanumdashid" @onclick="ShowAlphaNumDashId" class="btn btn-primary">
-        AlphaNumDashId
-    </button>
-    <button id="customid" @onclick="() => { HideCustomId = !HideCustomId;}" class="btn btn-primary">
-        CustomId
-    </button>
-    <button id="int" @onclick="ShowInt" class="btn btn-primary">
-        Int
-    </button>
-    <button id="double" @onclick="() => { HideDouble = !HideDouble; }" class="btn btn-primary">
-        Double
-    </button>
-    <button id="keyword" @onclick="() => { HideKeyWord = !HideKeyWord; }" class="btn btn-primary">
-        keyword
-    </button>
-    <button id="string" @onclick="() => { HideString = !HideString; }" class="btn btn-primary">
-        String
-    </button>
-
-    <button id="char" @onclick="() => { HideChar = !HideChar; }" class="btn btn-primary">
-        Character
-    </button>
-
-    <button id="sugar" @onclick="() => { HideSugar = !HideSugar; }" class="btn btn-primary">
-        Sugar
-    </button>
-    <button id="date" @onclick="() => { HideDate = !HideDate; }" class="btn btn-primary">
-        Date
-    </button>
-    <button id="ext" @onclick="ShowExtension" class="btn btn-primary">
-        Extension
-    </button>
-
-    <button id="single" @onclick="() => { HideSingleComment = !HideSingleComment; }" class="btn btn-primary">
-        Single line comment
-    </button>
-
-    <button id="multi" @onclick="() => { HideMultiComment = !HideMultiComment; }" class="btn btn-primary">
-        Multi line comment
-    </button>
-    
+    <select @bind="TokenSelection" @bind:after="OnTokenSelectionChange" id="tokenType" class="form-select">
+        <Option value=" "> </Option>
+        @foreach (var t in TokenActions)
+        {
+            <option value="@t.Key">@t.Key</option> 
+        }
+    </select>
 </div>
 
+<ZeroParameterToken Label="AlphaId" Hide="HideAlphaId" OnTokenAdded="AlphaId" OnCancel="CancelSelection"></ZeroParameterToken>
+
+<ZeroParameterToken Label="AlphaNumId" Hide="HideAlphaNumId" OnTokenAdded="AlphaNumId" OnCancel="CancelSelection"></ZeroParameterToken>
+
+<ZeroParameterToken Label="AlphaNumDashId" Hide="HideAlphaNumDashId" OnTokenAdded="AlphaNumDashId" OnCancel="CancelSelection"></ZeroParameterToken>
+
+<ZeroParameterToken Label="Int" Hide="HideInt" OnTokenAdded="Int" OnCancel="CancelSelection"></ZeroParameterToken>
+
+<ZeroParameterToken Label="Extension" Hide="HideExtension" OnTokenAdded="Extension" OnCancel="CancelSelection"></ZeroParameterToken>
+
+<TwoParameterToken Label="Custom Id" p1Label="start pattern" p2Label="end pattern" Hide="HideCustomId" OnTokenAdded="CustomId" OnCancel="CancelSelection"></TwoParameterToken>
+
+<TwoParameterToken Label="String" p1Label="delimiter" p2Label="escape char" Hide="HideString" OnTokenAdded="String" OnCancel="CancelSelection"></TwoParameterToken>
+
+<TwoParameterToken Label="Multi line comment" p1Label="start" p2Label="end" p1Value="/*" p2Value="*/" Hide="HideMultiComment" OnTokenAdded="MultiComment" OnCancel="CancelSelection"></TwoParameterToken>
 
 
-<div hidden="@HideBasic">
-    <DialogHeader ShowClose="false">
-        <h4>@TokenType</h4>
-    </DialogHeader>
-    <DialogBody>
-        <label for="basicName" class="input-label">name</label>
-        <input id="basicName" @bind="TokenName"/>
-    </DialogBody>
-    <DialogFooter>
-        <button type="button" class="btn btn-primary" @onclick="@Basic">Ok</button>
-        <button type="button" class="btn btn-secondary" @onclick="() => { HideBasic = true; }">Cancel</button>
-    </DialogFooter>
-</div>
+<OneParameterToken Label="Single Line comment" p1Label="start" p1Value="//" Hide="HideSingleComment" OnTokenAdded="SingleComment" OnCancel="CancelSelection"></OneParameterToken>
 
 
-<TwoParameterToken Label="Custom Id" p1Label="start pattern" p2Label="end pattern" Hide="HideCustomId" OnTokenAdded="CustomId"></TwoParameterToken>
+<TwoParameterToken Label="Character" p1Label="delimiter" p2Label="escape char" Hide="HideChar" OnTokenAdded="Character" OnCancel="CancelSelection"></TwoParameterToken>
 
+<OneParameterToken Label="Double" p1Label="decimal separator" p1Value="." Hide="HideDouble" OnTokenAdded="Double" OnCancel="CancelSelection"></OneParameterToken>
 
+<OneParameterToken Label="Keyword" p1Label="value" Hide="HideKeyWord" OnTokenAdded="KeyWord" OnCancel="CancelSelection"></OneParameterToken>
 
-<TwoParameterToken Label="String" p1Label="delimiter" p2Label="escape char" Hide="HideString" OnTokenAdded="String"></TwoParameterToken>
+<OneParameterToken Label="Sugar" Hide="HideSugar" p1Label="pattern" OnTokenAdded="Sugar" OnCancel="CancelSelection"></OneParameterToken>
 
-<TwoParameterToken Label="Multi line comment" p1Label="start" p2Label="end" p1Value="/*" p2Value="*/" Hide="HideMultiComment" OnTokenAdded="MultiComment"></TwoParameterToken>
-
-
-<OneParameterToken Label="Single Line comment" p1Label="start" p1Value="//" Hide="HideSingleComment" OnTokenAdded="SingleComment"></OneParameterToken>
-
-
-<TwoParameterToken Label="Character" p1Label="delimiter" p2Label="escape char" Hide="HideChar" OnTokenAdded="Character"></TwoParameterToken>
-
-<OneParameterToken Label="Double" p1Label="decimal separator" p1Value="." Hide="HideDouble" OnTokenAdded="Double"></OneParameterToken>
-
-<OneParameterToken Label="Keyword" p1Label="value" Hide="HideKeyWord" OnTokenAdded="KeyWord"></OneParameterToken>
-
-<OneParameterToken Label="Sugar" Hide="HideSugar" p1Label="pattern" OnTokenAdded="Sugar"></OneParameterToken>
+<OneParameterToken Label="Sugar" Hide="HideHexa" p1Label="pattern" OnTokenAdded="Hexa" OnCancel="CancelSelection"></OneParameterToken>
 
 <div hidden="@HideDate">
     <DialogHeader ShowClose="false">
@@ -296,6 +296,6 @@
     </DialogBody>
     <DialogFooter>
         <button type="button" class="btn btn-primary" @onclick="@Date">Ok</button>
-        <button type="button" class="btn btn-secondary" @onclick="() => { HideDate = true; }">Cancel</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { HideDate = true; CancelSelection();}">Cancel</button>
     </DialogFooter>
 </div>

@@ -12,6 +12,12 @@
     
     public string p1Value { get; set; } = "";
     
+    [Parameter] public EventCallback    OnCancel { get; set; }
+    
+    private void Cancel()
+    {
+        OnCancel.InvokeAsync();
+    }
     
     
     [Parameter] public EventCallback<(string name, string p1)> OnTokenAdded { get; set; }
@@ -42,6 +48,6 @@
     </DialogBody>
     <DialogFooter>
         <button type="button" class="btn btn-primary" @onclick="@Validate">Ok</button>
-        <button type="button" class="btn btn-secondary" @onclick="() => { Hide = true; }">Cancel</button>
+        <button type="button" class="btn btn-secondary" @onclick="() => { Hide = true; Cancel(); }">Cancel</button>
     </DialogFooter>
 </div>
