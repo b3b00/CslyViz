@@ -109,7 +109,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-ceHsNC1tVFoLj+9svQktfHTsB5NqMKyDkwABPNV\/8HY=",
+      "hash": "sha256-2kcJQC4WgKJNQ3jQEVkP8YKfW0QzVFa3\/LzPYUh2tO4=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -117,27 +117,27 @@
       "url": "_framework\/BlazorDialog.wasm"
     },
     {
-      "hash": "sha256-M92QsHMpwIA7zacmY0YqL1tC5+oKCkGmPdkPguk1EV0=",
+      "hash": "sha256-H4zgzGQTLFPAHU3EeODdo\/qyUIOAk50ZkgEG9SKfQic=",
       "url": "_framework\/csly-cli-api.wasm"
     },
     {
-      "hash": "sha256-36ZjlAUc6xVzZpAh2glo3NPaWCXEQSBmO12PkI3UaIE=",
+      "hash": "sha256-T9C7pRi9N\/vEwp\/RiVCRsaE+Dt4T5sK1Ayb9u6NgkSo=",
       "url": "_framework\/csly-cli-builder.wasm"
     },
     {
-      "hash": "sha256-HstttL1e3wHuvaN9ufwM77I3mFp\/1kXQZHQccAL0b60=",
+      "hash": "sha256-lvdQLNtHEP9iiIiVeZRePZAl1db7uCNhfSYHxvW99O4=",
       "url": "_framework\/csly-cli-decompiler.wasm"
     },
     {
-      "hash": "sha256-+fETtUR5IxzLRwJ+7tzxhEDGf28CH7LX6jKRwZV+zNw=",
+      "hash": "sha256-NwMnol6SYRzjJoPSwHpjIZCpPxVRsmJhTr1l1kH06B4=",
       "url": "_framework\/csly-cli-extractor.wasm"
     },
     {
-      "hash": "sha256-LmYGwf009AgLe7lHTSXYWoOFdknTx48GqPOEWUhCs4Y=",
+      "hash": "sha256-wO5p7NbcqUQOLnS8bzukGtoooyioh0867abeq09Ysck=",
       "url": "_framework\/csly-cli-parser.wasm"
     },
     {
-      "hash": "sha256-u3ZYSZEaBdfRW7Ut9pDXnPlBDhtNDasTqu+PTE2btiQ=",
+      "hash": "sha256-cuqyhKCn6mbtSHB1KX+kwuimT9BAgWoTjbLWU9XxgPg=",
       "url": "_framework\/CslyViz.wasm"
     },
     {
@@ -209,7 +209,7 @@
       "url": "_framework\/SharpCoreFileSystem.wasm"
     },
     {
-      "hash": "sha256-NHfaxSZoqQNBrfP10vLZAJj7LzY1d7g8CYxnb+a27oM=",
+      "hash": "sha256-z0Tu3ZJZGRd1xMg7L3fSuvFD+pPkTwOI6SVCAH8lkiM=",
       "url": "_framework\/sly.wasm"
     },
     {
@@ -525,5 +525,5 @@
       "url": "_content\/BlazorDialog\/styles.min.css"
     }
   ],
-  "version": "0VXm0LU8"
+  "version": "SWU0IVj\/"
 };
