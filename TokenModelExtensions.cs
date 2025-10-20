@@ -65,7 +65,7 @@ public static  class TokenModelExtensions
 
         if (tokenModel.Type == GenericToken.KeyWord && tokenModel.Args != null && tokenModel.Args.Length == 1)
         {
-            return $@"[keyWord] {tokenModel.Name} : ""{tokenModel.Args[0]}"";";
+            return $@"[KeyWord] {tokenModel.Name} : ""{tokenModel.Args[0]}"";";
         }
         
         if (tokenModel.Type == GenericToken.Date && tokenModel.Args != null && tokenModel.Args.Length == 2)
